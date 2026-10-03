@@ -1,12 +1,32 @@
-import { CalendarDays, MapPin, Moon, Search } from "lucide-react";
+"use client";
 
-const info = [
-  { icon: CalendarDays, label: "Today", value: "Friday, 25 April 2025" },
-  { icon: Moon, label: "Hijri Date", value: "26 Shawwal 1446 AH" },
-  { icon: MapPin, label: "Location", value: "Dhaka, Bangladesh" },
-];
+import { CalendarDays, MapPin, Moon, Search } from "lucide-react";
+import usePrayerTimes from "@/hooks/usePrayerTimes";
+import { DEFAULT_LOCATION } from "@/lib/api/prayer";
+import { formatToday } from "@/lib/prayer-utils";
 
 export default function Hero() {
+  const { data } = usePrayerTimes();
+
+  const info = [
+    {
+      icon: CalendarDays,
+      label: "Today",
+      value: data ? formatToday(data.timezone) : "Loading...",
+    },
+    {
+      icon: Moon,
+      label: "Hijri Date",
+      value: data
+        ? `${data.hijri.day} ${data.hijri.month} ${data.hijri.year} AH`
+        : "Loading...",
+    },
+    {
+      icon: MapPin,
+      label: "Location",
+      value: `${DEFAULT_LOCATION.city}, ${DEFAULT_LOCATION.country}`,
+    },
+  ];
   return (
     <section
       className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-6 text-white md:p-10"
