@@ -1,5 +1,6 @@
 import { Inter, Amiri, Hind_Siliguri } from "next/font/google";
 import "./globals.css";
+import AppShell from "@/components/layout/AppShell";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,7 +32,9 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
       className={`${inter.variable} ${amiri.variable} ${bengali.variable}`}
     >
-      <body className="min-h-screen font-sans antialiased">{children}</body>
+      <body className="min-h-screen font-sans antialiased">
+        <AppShell>{children}</AppShell>
+        </body>
     </html>
   );
 }
