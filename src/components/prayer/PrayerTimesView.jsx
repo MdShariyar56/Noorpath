@@ -37,11 +37,11 @@ export default function PrayerTimesView() {
 
   return (
     <div className="space-y-6">
-      <div>
+      <div className="rounded-2xl bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-6 text-white">
         <h1 className="flex items-center gap-2 text-2xl font-bold">
-          <Clock className="text-brand-600 dark:text-brand-300" /> Prayer Times
+          <Clock className="text-white" /> Prayer Times
         </h1>
-        <p className="mt-1 flex items-center gap-1 text-sm text-muted">
+        <p className="mt-1 flex items-center gap-1 text-sm  text-brand-100">
           <MapPin size={14} /> {DEFAULT_LOCATION.city}, {DEFAULT_LOCATION.country}
         </p>
       </div>
