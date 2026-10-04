@@ -57,5 +57,5 @@ export default function usePrayerTimes(location = DEFAULT_LOCATION) {
   const state =
     data && nowSec !== null ? getPrayerState(data.timings, nowSec) : null;
 
-  return { data, state, error };
-}
+  return { data, state, error, nowSec };
+  }

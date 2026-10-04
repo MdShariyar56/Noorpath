@@ -142,3 +142,14 @@ export const fmtFull = (ms) => fFull.format(new Date(ms));
 export const fmtShort = (ms) => fShort.format(new Date(ms));
 export const fmtMon = (ms) => fMon.format(new Date(ms));
 export const fmtMonthYear = (ms) => fMonthYear.format(new Date(ms));
+
+// আজকের পরের সবচেয়ে কাছের রমজানের প্রথম দিন
+export function nextRamadan(from, offset) {
+  let start = monthStartOf(from, offset);
+  for (let i = 0; i < 14; i++) {
+    const h = hijriOf(start, offset);
+    if (h.month === 9 && start > from) return { ms: start, year: h.year };
+    start = nextMonthStart(start, offset);
+  }
+  return null;
+}
