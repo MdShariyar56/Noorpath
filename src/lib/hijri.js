@@ -153,3 +153,16 @@ export function nextRamadan(from, offset) {
   }
   return null;
 }
+
+// আজকের পরের (বা চলতি) নির্দিষ্ট হিজরি মাসের প্রথম দিন
+export function nextMonthOf(from, offset, month) {
+  let start = monthStartOf(from, offset);
+  for (let i = 0; i < 14; i++) {
+    const h = hijriOf(start, offset);
+    if (h.month === month && (start > from || i === 0)) {
+      return { ms: start, year: h.year };
+    }
+    start = nextMonthStart(start, offset);
+  }
+  return null;
+}
