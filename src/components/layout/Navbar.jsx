@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Bell, ChevronDown, Menu, Search } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
+import Form from "next/form";
 
 const links = [
   { href: "/", label: "Home" },
@@ -79,14 +80,20 @@ export default function Navbar({ onMenuClick }) {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
-          <div className="hidden items-center gap-2 rounded-full border border-border bg-background px-4 py-2 md:flex md:w-64 lg:w-80">
+          <Form
+            action="/search"
+            className="hidden items-center gap-2 rounded-full border border-border bg-background px-4 py-2 md:flex md:w-64 lg:w-80"
+          >
             <Search size={16} className="text-muted" />
             <input
-              type="text"
+              type="search"
+              name="q"
+              required
+              minLength={2}
               placeholder="Search Quran, Hadith, Dua, Articles..."
               className="w-full bg-transparent text-sm outline-none placeholder:text-muted"
             />
-          </div>
+          </Form>
 
           <ThemeToggle />
 

@@ -30,7 +30,10 @@ function DuaCard({ dua, show, playing, failed, onToggle }) {
   };
 
   return (
-    <article className="rounded-2xl border border-border bg-card p-5">
+    <article
+      id={`dua-${dua.id}`}
+      className="scroll-mt-24 rounded-2xl border border-border bg-card p-5"
+    >
       <div className="flex items-start gap-2">
                 <div className="flex-1">
           <h3 className="font-semibold">{dua.title}</h3>

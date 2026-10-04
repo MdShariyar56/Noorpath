@@ -4,6 +4,7 @@ import { CalendarDays, MapPin, Moon, Search } from "lucide-react";
 import usePrayerTimes from "@/hooks/usePrayerTimes";
 import { DEFAULT_LOCATION } from "@/lib/api/prayer";
 import { formatToday } from "@/lib/prayer-utils";
+import Form from "next/form";
 
 export default function Hero() {
   const { data } = usePrayerTimes();
@@ -53,20 +54,27 @@ export default function Hero() {
             All in One Place
           </p>
 
-          <div className="mt-6 flex max-w-xl items-center rounded-xl bg-white p-1.5 shadow-lg">
+          <Form
+            action="/search"
+            className="mt-6 flex max-w-xl items-center rounded-xl bg-white p-1.5 shadow-lg"
+          >
             <Search size={18} className="mx-3 shrink-0 text-gray-400" />
             <input
-              type="text"
+              type="search"
+              name="q"
+              required
+              minLength={2}
               placeholder="Search Quran, Hadith, Dua, Articles..."
               className="w-full bg-transparent text-sm text-gray-800 outline-none placeholder:text-gray-400"
             />
             <button
+              type="submit"
               aria-label="Search"
               className="grid h-10 w-12 shrink-0 place-items-center rounded-lg bg-brand-600 text-white hover:bg-brand-700"
             >
               <Search size={18} />
             </button>
-          </div>
+          </Form>
         </div>
 
         {/* তারিখ/হিজরি/লোকেশন কার্ড */}
