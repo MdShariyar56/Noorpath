@@ -255,6 +255,7 @@ const PAGES = [
   { href: "/ramadan", en: "Ramadan", bn: "রমজান", d: ["Fasting times, trackers and duas", "রোজার সময়, ট্র্যাকার ও দুয়া"], kw: "ramadan ramzan fasting roza iftar suhoor sehri রমজান রোজা ইফতার সেহরি" },
   { href: "/hajj-umrah", en: "Hajj & Umrah Guide", bn: "হজ ও উমরা গাইড", d: ["Steps, duas and checklist", "ধাপ, দুয়া ও চেকলিস্ট"], kw: "hajj umrah ihram tawaf sai arafah হজ উমরা ইহরাম তাওয়াফ সাঈ আরাফা" },
   { href: "/articles", en: "Islamic Articles", bn: "ইসলামিক আর্টিকেল", d: ["Read and learn about Islam", "পড়ুন এবং ইসলাম সম্পর্কে জানুন"], kw: "articles blog reading আর্টিকেল প্রবন্ধ" },
+  { href: "/knowledge", en: "Islamic Knowledge", bn: "ইসলামিক জ্ঞান", d: ["Pillars, faith, prophets, wudu, salah and glossary", "স্তম্ভ, ঈমান, নবী, অজু, নামাজ ও পরিভাষা"], kw: "knowledge learn pillars faith iman prophets companions sahaba wudu ablution glossary জ্ঞান শিখুন স্তম্ভ ঈমান নবী সাহাবি অজু পরিভাষা" },
 ];
 
 function searchPages(terms) {
