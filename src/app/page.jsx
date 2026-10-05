@@ -5,8 +5,11 @@ import QuickTasbih from "@/components/home/QuickTasbih";
 import FeaturedArticles from "@/components/home/FeaturedArticles";
 import IslamicTools from "@/components/home/IslamicTools";
 import RightSidebar from "@/components/home/RightSidebar";
+import { getArticles } from "@/lib/api/articles";
 
-export default function Home() {
+export default async function Home() {
+  const [featured] = await getArticles();
+
   return (
     <div className="grid gap-6 xl:grid-cols-[1fr_300px]">
       <div className="min-w-0 space-y-6">
@@ -22,7 +25,7 @@ export default function Home() {
         <IslamicTools />
       </div>
 
-      <RightSidebar />
+      <RightSidebar featured={featured} />
     </div>
   );
 }

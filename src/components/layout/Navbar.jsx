@@ -105,12 +105,12 @@ export default function Navbar({ onMenuClick }) {
             <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500" />
           </button>
 
-          <button
-            aria-label="Profile"
-            className="grid h-9 w-9 place-items-center rounded-full bg-brand-600 text-sm font-semibold text-white"
+          <Link
+            href="/login"
+            className="rounded-full bg-brand-600 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-700"
           >
-            U
-          </button>
+            Login
+          </Link>
         </div>
       </div>
     </header>

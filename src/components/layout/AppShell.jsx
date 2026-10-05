@@ -1,12 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 
+// এই পেজগুলোতে নেভবার, সাইডবার ও ফুটার দেখাব না
+const BARE = ["/login", "/register", "/forgot-password"];
+
 export default function AppShell({ children }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  if (BARE.includes(pathname)) return <>{children}</>;
 
   return (
     <div className="flex min-h-screen flex-col">
