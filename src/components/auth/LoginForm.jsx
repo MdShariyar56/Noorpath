@@ -13,9 +13,11 @@ import {
 } from "./fields";
 import { authErrorText, login } from "@/lib/api/auth";
 import { validateEmail } from "@/lib/auth-utils";
+import { useAuth } from "./AuthProvider";
 
 export default function LoginForm({ next = "/", registered = false }) {
   const router = useRouter();
+  const { setUser } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
@@ -32,6 +34,7 @@ export default function LoginForm({ next = "/", registered = false }) {
 
   async function onSubmit(e) {
     e.preventDefault();
+    
     if (busy) return;
 
     const bad = Object.keys(errors).find((k) => errors[k]);
@@ -44,7 +47,8 @@ export default function LoginForm({ next = "/", registered = false }) {
     setBusy(true);
     setFormError(null);
     try {
-      await login({ email: email.trim(), password, remember });
+      const data = await login({ email: email.trim(), password, remember });
+      setUser(data.user ?? null);
       router.push(next);
       router.refresh();
     } catch (err) {

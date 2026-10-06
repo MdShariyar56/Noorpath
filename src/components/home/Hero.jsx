@@ -30,8 +30,11 @@ export default function Hero() {
   ];
   return (
     <section
-      className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-6 text-white md:p-10"
-      // style={{ backgroundImage: "linear-gradient(to right, rgba(7,42,33,.92), rgba(7,42,33,.35)), url('/images/hero.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}
+      className="relative overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat p-6 text-white md:p-10"
+  style={{
+    backgroundImage:
+      "linear-gradient(to right, rgba(7,42,33,.92), rgba(7,42,33,.45)), url('https://imglink.cc/cdn/0WgB99MI-5.jpg')",
+  }}
     >
       {/* সাজসজ্জার বৃত্ত */}
       <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-gold-400/20 blur-3xl" />

@@ -1,6 +1,7 @@
 import { Inter, Amiri, Hind_Siliguri } from "next/font/google";
 import "./globals.css";
 import AppShell from "@/components/layout/AppShell";
+import { AuthProvider } from "@/components/auth/AuthProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,7 +34,9 @@ export default function RootLayout({ children }) {
       className={`${inter.variable} ${amiri.variable} ${bengali.variable}`}
     >
       <body className="min-h-screen font-sans antialiased">
-        <AppShell>{children}</AppShell>
+                <AuthProvider>
+          <AppShell>{children}</AppShell>
+        </AuthProvider>
         </body>
     </html>
   );

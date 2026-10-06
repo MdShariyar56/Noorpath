@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Bell, ChevronDown, Menu, Search } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import Form from "next/form";
+import UserMenu from "./UserMenu";
 
 const links = [
   { href: "/", label: "Home" },
@@ -105,12 +106,7 @@ export default function Navbar({ onMenuClick }) {
             <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500" />
           </button>
 
-          <Link
-            href="/login"
-            className="rounded-full bg-brand-600 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-700"
-          >
-            Login
-          </Link>
+                    <UserMenu />
         </div>
       </div>
     </header>

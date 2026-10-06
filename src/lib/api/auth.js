@@ -59,3 +59,18 @@ export function authErrorText(err, kind) {
     ];
   return ["Something went wrong. Please try again.", "কিছু একটা ভুল হয়েছে। আবার চেষ্টা করুন।"];
 }
+
+// এই ব্রাউজারে কে লগইন করা আছে। না থাকলে (বা সার্ভার না পেলে) null
+export async function getMe() {
+  if (!BASE) return null;
+  try {
+    const res = await fetch(`${BASE}/auth/me`, { credentials: "include" });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.user ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export const logout = () => post("/auth/logout", {});
