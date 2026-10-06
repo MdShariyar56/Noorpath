@@ -2,13 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Bookmark, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { useAuth } from "@/components/auth/AuthProvider";
+import { addBookmark, listBookmarks, removeBookmark } from "@/lib/api/bookmarks";
 
 export default function SurahReader({ surah }) {
+  const router = useRouter();
+  const { user, loading } = useAuth();
+
   const [playing, setPlaying] = useState(null); // চলমান আয়াত নম্বর
   const [showBn, setShowBn] = useState(true);
   const [showEn, setShowEn] = useState(true);
   const audioRef = useRef(null);
+
+  const [marked, setMarked] = useState(() => new Set());
+  const [pending, setPending] = useState(() => new Set());
+  const [bmError, setBmError] = useState(null);
+
+  /* ---------- অডিও ---------- */
 
   const stop = () => {
     if (audioRef.current) {
@@ -43,6 +55,89 @@ export default function SurahReader({ surah }) {
 
   // পেজ ছাড়লে অডিও বন্ধ
   useEffect(() => () => audioRef.current?.pause(), []);
+
+  /* ---------- বুকমার্ক ---------- */
+
+  // লগইন করা থাকলে এই সূরার বুকমার্কগুলো আনি
+  useEffect(() => {
+    if (!user) {
+      setMarked(new Set());
+      return;
+    }
+    let cancelled = false;
+    listBookmarks("quran")
+      .then((list) => {
+        if (cancelled) return;
+        const prefix = `${surah.number}:`;
+        setMarked(
+          new Set(
+            list
+              .filter((b) => b.target.startsWith(prefix))
+              .map((b) => Number(b.target.slice(prefix.length)))
+          )
+        );
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.id, surah.number]);
+
+  const goLogin = (ayahNo) =>
+    router.push(
+      `/login?next=${encodeURIComponent(`/quran/${surah.number}#ayah-${ayahNo}`)}`
+    );
+
+  const toggleBookmark = async (ayahNo) => {
+    if (loading || pending.has(ayahNo)) return;
+    if (!user) return goLogin(ayahNo);
+
+    const target = `${surah.number}:${ayahNo}`;
+    const was = marked.has(ayahNo);
+
+    setBmError(null);
+    setPending((p) => new Set(p).add(ayahNo));
+    // সাথে সাথে দেখাই, ব্যর্থ হলে ফিরিয়ে নিই
+    setMarked((m) => {
+      const n = new Set(m);
+      if (was) n.delete(ayahNo);
+      else n.add(ayahNo);
+      return n;
+    });
+
+    try {
+      if (was) await removeBookmark("quran", target);
+      else await addBookmark("quran", target);
+    } catch (err) {
+      setMarked((m) => {
+        const n = new Set(m);
+        if (was) n.add(ayahNo);
+        else n.delete(ayahNo);
+        return n;
+      });
+      if (err?.status === 401) {
+        goLogin(ayahNo);
+      } else if (err?.code === "NOT_CONNECTED") {
+        setBmError([
+          "The server is not connected yet.",
+          "সার্ভার এখনো সংযুক্ত হয়নি।",
+        ]);
+      } else {
+        setBmError([
+          "Could not update the bookmark. Please try again.",
+          "বুকমার্ক আপডেট করা যায়নি। আবার চেষ্টা করুন।",
+        ]);
+      }
+    } finally {
+      setPending((p) => {
+        const n = new Set(p);
+        n.delete(ayahNo);
+        return n;
+      });
+    }
+  };
+
+  /* ---------- দেখানো ---------- */
 
   const prev = surah.number > 1 ? surah.number - 1 : null;
   const next = surah.number < 114 ? surah.number + 1 : null;
@@ -92,6 +187,16 @@ export default function SurahReader({ surah }) {
         </button>
       </div>
 
+      {bmError && (
+        <p
+          role="alert"
+          className="rounded-xl border border-red-500/40 bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-900/20 dark:text-red-200"
+        >
+          {bmError[0]}
+          <span className="block opacity-80">{bmError[1]}</span>
+        </p>
+      )}
+
       {showBismillah && (
         <p className="font-arabic py-2 text-center text-3xl text-brand-600 dark:text-brand-300">
           بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
@@ -102,11 +207,12 @@ export default function SurahReader({ surah }) {
       <div className="space-y-3">
         {surah.ayahs.map((a, i) => {
           const active = playing === a.number;
+          const isMarked = marked.has(a.number);
           return (
             <div
               key={a.number}
               id={`ayah-${a.number}`}
-              className={`rounded-2xl border p-4 transition ${
+              className={`scroll-mt-24 rounded-2xl border p-4 transition ${
                 active
                   ? "border-brand-400 bg-brand-50 dark:bg-brand-800/40"
                   : "border-border bg-card"
@@ -123,6 +229,26 @@ export default function SurahReader({ surah }) {
                     className="grid h-8 w-8 place-items-center rounded-full bg-brand-600 text-white hover:bg-brand-700"
                   >
                     {active ? <Pause size={14} /> : <Play size={14} />}
+                  </button>
+                  <button
+                    onClick={() => toggleBookmark(a.number)}
+                    disabled={pending.has(a.number)}
+                    aria-pressed={isMarked}
+                    aria-label={isMarked ? "Remove bookmark" : "Bookmark this ayah"}
+                    title={
+                      user
+                        ? isMarked
+                          ? "Remove bookmark / বুকমার্ক সরান"
+                          : "Bookmark / বুকমার্ক করুন"
+                        : "Login to bookmark / বুকমার্ক করতে লগইন করুন"
+                    }
+                    className={`grid h-8 w-8 place-items-center rounded-full transition disabled:opacity-60 ${
+                      isMarked
+                        ? "bg-gold-400/25 text-gold-500"
+                        : "text-muted hover:bg-brand-50 hover:text-brand-600 dark:hover:bg-brand-800"
+                    }`}
+                  >
+                    <Bookmark size={16} fill={isMarked ? "currentColor" : "none"} />
                   </button>
                 </div>
 
