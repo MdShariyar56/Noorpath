@@ -20,6 +20,7 @@ import {
   UMRAH_INFO,
   UMRAH_STEPS,
 } from "@/data/hajj";
+import Image from "next/image";
 
 const TABS = [
   { id: "hajj", en: "Hajj", bn: "হজ" },
@@ -154,10 +155,13 @@ export default function HajjUmrahGuide() {
   return (
     <div className="space-y-6">
       <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
-        <img loading="lazy"
+        <Image
           src="https://imglink.cc/cdn/utNUdJza6Q.png"
           alt="Hajj Umrah Logo"
-          className="h-17 w-17 border-1 rounded-full  object-cover"
+          width={68}
+          height={68}
+          loading="lazy"
+          className="h-17 w-17 rounded-full border object-cover"
         />
         <div className="">
           <p className="font-bold text-2xl">Hajj &amp; Umrah Guide</p>
@@ -298,7 +302,7 @@ export default function HajjUmrahGuide() {
                 onClick={() => save([])}
                 className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-1.5 text-sm font-medium hover:border-brand-300"
               >
-                <RotateCcw size={14} /> Reset 
+                <RotateCcw size={14} /> Reset
               </button>
             </div>
             <div className="mt-3 h-2 overflow-hidden rounded-full bg-brand-50 dark:bg-brand-800">
@@ -308,9 +312,7 @@ export default function HajjUmrahGuide() {
               />
             </div>
             <p className="mt-2 text-[11px] text-muted">
-              <Bi
-                t={["Saved on this device only."]}
-              />
+              <Bi t={["Saved on this device only."]} />
             </p>
           </Card>
 

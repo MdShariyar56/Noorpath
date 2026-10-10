@@ -16,6 +16,7 @@ import {
 } from "@/lib/hijri";
 import { format12h, formatCountdown, toSeconds } from "@/lib/prayer-utils";
 import { DUAS, GOALS, HADITHS } from "@/data/ramadan";
+import Image from "next/image";
 
 const EMPTY = [];
 
@@ -31,7 +32,9 @@ function Bi({ en, bn }) {
 
 function Card({ title, children, className = "" }) {
   return (
-    <section className={`rounded-2xl border border-border bg-card p-5 ${className}`}>
+    <section
+      className={`rounded-2xl border border-border bg-card p-5 ${className}`}
+    >
       {title && <h2 className="mb-3 font-bold">{title}</h2>}
       {children}
     </section>
@@ -79,7 +82,7 @@ function useStored(key, initial) {
         localStorage.setItem(key, JSON.stringify(next));
       } catch {}
     },
-    [key]
+    [key],
   );
 
   return [value, update];
@@ -108,7 +111,10 @@ function fastingPhase(timings, nowSec) {
   return {
     status: { en: "Iftar time", bn: "ইফতারের সময়" },
     // আগামীকালের ফজর আজকের ফজর ধরে আনুমানিক হিসাব
-    label: { en: "Next suhoor ends in (approx.)", bn: "পরের সেহরি শেষ হতে বাকি (আনুমানিক)" },
+    label: {
+      en: "Next suhoor ends in (approx.)",
+      bn: "পরের সেহরি শেষ হতে বাকি (আনুমানিক)",
+    },
     remaining: fajr + 86400 - nowSec,
     progress: 1,
   };
@@ -135,7 +141,9 @@ export default function RamadanDashboard() {
     const h = hijriOf(today, offset);
     if (h.month === 9) {
       const startMs = monthStartOf(today, offset);
-      const length = Math.round((nextMonthStart(startMs, offset) - startMs) / DAY);
+      const length = Math.round(
+        (nextMonthStart(startMs, offset) - startMs) / DAY,
+      );
       return { inRamadan: true, year: h.year, day: h.day, length, startMs };
     }
     const nx = nextRamadan(today, offset) ?? { ms: today, year: h.year };
@@ -149,15 +157,29 @@ export default function RamadanDashboard() {
 
   const info =
     real && !real.inRamadan && preview
-      ? { inRamadan: true, preview: true, year: real.year, day: 15, length: 30, startMs: real.startMs }
+      ? {
+          inRamadan: true,
+          preview: true,
+          year: real.year,
+          day: 15,
+          length: 30,
+          startMs: real.startMs,
+        }
       : real;
 
   const yearKey = info ? (info.preview ? "preview" : info.year) : null;
-  const dateKey = today !== null ? new Date(today).toISOString().slice(0, 10) : null;
+  const dateKey =
+    today !== null ? new Date(today).toISOString().slice(0, 10) : null;
 
   const [juz, setJuz] = useStored(yearKey && `ramadan-juz:${yearKey}`, 0);
-  const [fasts, setFasts] = useStored(yearKey && `ramadan-fasts:${yearKey}`, EMPTY);
-  const [goals, setGoals] = useStored(dateKey && `ramadan-goals:${dateKey}`, EMPTY);
+  const [fasts, setFasts] = useStored(
+    yearKey && `ramadan-fasts:${yearKey}`,
+    EMPTY,
+  );
+  const [goals, setGoals] = useStored(
+    dateKey && `ramadan-goals:${dateKey}`,
+    EMPTY,
+  );
 
   if (!HIJRI_SUPPORTED) {
     return (
@@ -169,41 +191,45 @@ export default function RamadanDashboard() {
   }
 
   if (!info) {
-    return <div className="h-96 animate-pulse rounded-2xl bg-brand-50 dark:bg-brand-800/40" />;
+    return (
+      <div className="h-96 animate-pulse rounded-2xl bg-brand-50 dark:bg-brand-800/40" />
+    );
   }
 
   const toggleFast = (d) =>
     setFasts(fasts.includes(d) ? fasts.filter((x) => x !== d) : [...fasts, d]);
   const toggleGoal = (id) =>
-    setGoals(goals.includes(id) ? goals.filter((x) => x !== id) : [...goals, id]);
+    setGoals(
+      goals.includes(id) ? goals.filter((x) => x !== id) : [...goals, id],
+    );
 
-  const phase = data && nowSec !== null ? fastingPhase(data.timings, nowSec) : null;
+  const phase =
+    data && nowSec !== null ? fastingPhase(data.timings, nowSec) : null;
   const hadith = HADITHS[info.inRamadan ? info.day % HADITHS.length : 0];
 
   return (
     <div className="space-y-6">
-       <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
-               <img loading="lazy"
-                   src="https://imglink.cc/cdn/wZV86kKY6c.webp"
-                   alt="Prayer Times Logo"
-                   className="h-17 w-17 rounded-full border-2 object-cover"
-                 />
-               <div className="">
-                 
-                 <p className="font-bold text-2xl">Ramadan {info.year} Hijri</p>
-                 {info.inRamadan ? (
+      <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
+        <Image
+          src="https://imglink.cc/cdn/wZV86kKY6c.webp"
+          alt="Prayer Times Logo"
+          width={68}
+          height={68}
+          loading="lazy"
+          className="h-17 w-17 rounded-full border-2 object-cover"
+        />
+        <div className="">
+          <p className="font-bold text-2xl">Ramadan {info.year} Hijri</p>
+          {info.inRamadan ? (
             <>
               <p className=" text-3xl font-bold text-gold-400">
                 Day {info.day} of {info.length}
-                
               </p>
               <div className=" max-w-xl">
                 <Bar value={info.day / info.length} light />
               </div>
               <p className="mt-2 text-sm text-brand-100">
-                <Bi
-                  en={`${info.length - info.day} days left`}
-                />
+                <Bi en={`${info.length - info.day} days left`} />
               </p>
             </>
           ) : (
@@ -215,7 +241,7 @@ export default function RamadanDashboard() {
                   <>Ramadan begins in {info.daysTo} days</>
                 )}
               </p>
-              
+
               <p className=" text-sm text-brand-100">
                 <Bi
                   en={`Expected around ${fmtFull(info.startMs)}, subject to moon sighting.`}
@@ -223,11 +249,8 @@ export default function RamadanDashboard() {
               </p>
             </>
           )}
-               </div>
-               
-             </div>
-
-      
+        </div>
+      </div>
 
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
         {/* বাম কলাম */}
@@ -235,9 +258,7 @@ export default function RamadanDashboard() {
           <Card title="Today's fasting times">
             {error && (
               <p className="text-sm text-red-500">
-                <Bi
-                  en="Could not load prayer times. Please check your connection and refresh."
-                />
+                <Bi en="Could not load prayer times. Please check your connection and refresh." />
               </p>
             )}
             {!error && !phase && (
@@ -256,7 +277,7 @@ export default function RamadanDashboard() {
                   </div>
                   <div className="rounded-xl bg-background p-4">
                     <p className="text-xs text-muted">
-                      <Bi en="Iftar (Maghrib)"/>
+                      <Bi en="Iftar (Maghrib)" />
                     </p>
                     <p className="mt-1 text-2xl font-bold tabular-nums">
                       {format12h(data.timings.Maghrib)}
@@ -270,7 +291,7 @@ export default function RamadanDashboard() {
                   </p>
                   <div className="mt-2 flex items-end justify-between gap-3">
                     <span className="text-xs text-muted">
-                      <Bi en={phase.label.en}  />
+                      <Bi en={phase.label.en} />
                     </span>
                     <span className="text-2xl font-bold tabular-nums">
                       {formatCountdown(phase.remaining)}
@@ -284,16 +305,15 @@ export default function RamadanDashboard() {
                 <p className="mt-3 text-[11px] text-muted">
                   <Bi
                     en={`Times for ${data.location}, calculated by the same method as the Prayer Times page. Local mosque or Islamic Foundation timetables may differ by a minute or two.${
-                      info.inRamadan ? "" : " Outside Ramadan, this is useful for voluntary fasts."
+                      info.inRamadan
+                        ? ""
+                        : " Outside Ramadan, this is useful for voluntary fasts."
                     }`}
-                    
                   />
                 </p>
               </>
             )}
           </Card>
-
-          
 
           <Card title="Duas">
             <div className="space-y-5">
@@ -302,7 +322,10 @@ export default function RamadanDashboard() {
                   <h3 className="font-semibold">
                     <Bi en={d.en} bn={d.bn} />
                   </h3>
-                  <p dir="rtl" className="font-arabic mt-3 text-right text-2xl leading-[2.2]">
+                  <p
+                    dir="rtl"
+                    className="font-arabic mt-3 text-right text-2xl leading-[2.2]"
+                  >
                     {d.arabic}
                   </p>
                   <p className="mt-2 text-sm italic text-brand-600 dark:text-brand-300">
@@ -328,7 +351,8 @@ export default function RamadanDashboard() {
         <div className="space-y-6">
           <Card title="Quran progress">
             <p className="text-3xl font-bold text-brand-600 dark:text-brand-300">
-              {juz} <span className="text-base font-medium text-muted">/ 30 Juz</span>
+              {juz}{" "}
+              <span className="text-base font-medium text-muted">/ 30 Juz</span>
             </p>
             <div className="mt-3">
               <Bar value={juz / 30} />
@@ -359,7 +383,7 @@ export default function RamadanDashboard() {
                 href="/quran"
                 className="ml-auto text-sm font-semibold text-brand-600 dark:text-brand-300"
               >
-                Continue reading  →
+                Continue reading →
               </Link>
             </div>
           </Card>
@@ -391,7 +415,7 @@ export default function RamadanDashboard() {
                         {done && <Check size={14} />}
                       </span>
                       <span className={done ? "line-through opacity-60" : ""}>
-                        <Bi en={g.en}  />
+                        <Bi en={g.en} />
                       </span>
                     </button>
                   </li>
@@ -399,14 +423,15 @@ export default function RamadanDashboard() {
               })}
             </ul>
             <p className="mt-3 text-[11px] text-muted">
-              <Bi
-                en="Resets automatically every day. Saved on this device only."
-              />
+              <Bi en="Resets automatically every day. Saved on this device only." />
             </p>
           </Card>
 
           <Card title="Hadith / হাদিস">
-            <p dir="rtl" className="font-arabic text-right text-xl leading-[2.2]">
+            <p
+              dir="rtl"
+              className="font-arabic text-right text-xl leading-[2.2]"
+            >
               {hadith.arabic}
             </p>
             <p className="mt-3 text-sm">

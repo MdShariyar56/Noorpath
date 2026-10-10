@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Glossary from "@/components/knowledge/Glossary";
 import TopicSections from "@/components/knowledge/TopicSections";
 import { getGlossary, getTopic, getTopics } from "@/lib/api/knowledge";
+import Image from "next/image";
 
 export async function generateMetadata({ params }) {
   const { topic } = await params;
@@ -106,9 +107,12 @@ export default async function TopicPage({ params }) {
             >
               {/* Topic Image */}
               <div className="h-14 w-14 shrink-0 overflow-hidden rounded-lg">
-                <img loading="lazy"
+                <Image
                   src={t.icon}
                   alt={t.title[0]}
+                  width={400}
+                  height={200}
+                  loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>

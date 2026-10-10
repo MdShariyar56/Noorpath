@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getArticles, getCategories } from "@/lib/api/articles";
 import { fmtDate } from "@/lib/date";
+import Image from "next/image";
 
 export default async function FeaturedArticles() {
   const [all, categories] = await Promise.all([getArticles(), getCategories()]);
@@ -28,11 +29,13 @@ export default async function FeaturedArticles() {
   className="group overflow-hidden rounded-2xl border border-border bg-card transition hover:shadow-md"
 >
   <div className="relative h-32 overflow-hidden">
-    <img
-      src={a.icon}
-      alt={a.title[0]}
-      className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-    />
+    <Image
+  src={a.icon}
+  alt={a.title[0]}
+  width={400}
+  height={200}
+  className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+/>
 
     <span className="absolute bottom-2 left-3 rounded-full bg-brand-600 px-2.5 py-0.5 text-[11px] font-medium text-white">
       {cat?.en}

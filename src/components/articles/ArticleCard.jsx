@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { fmtDate } from "@/lib/date";
+import Image from "next/image";
 
 export default function ArticleCard({ a, categories }) {
   const cat = categories.find((c) => c.id === a.cat);
@@ -11,9 +12,12 @@ export default function ArticleCard({ a, categories }) {
     >
       {/* Article Image */}
       <div className="relative h-36 overflow-hidden">
-        <img loading="lazy"
+        <Image
           src={a.icon}
           alt={a.title[0]}
+          width={400}
+          height={200}
+          loading="lazy"
           className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
         />
 
@@ -30,10 +34,7 @@ export default function ArticleCard({ a, categories }) {
 
       {/* Content */}
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="line-clamp-2 text-sm font-semibold">
-          {a.title[0]}
-        </h3>
-
+        <h3 className="line-clamp-2 text-sm font-semibold">{a.title[0]}</h3>
 
         <p className="mt-2 line-clamp-2 text-xs text-foreground/70">
           {a.excerpt[0]}
@@ -44,7 +45,7 @@ export default function ArticleCard({ a, categories }) {
         </p>
 
         <p className="mt-auto pt-3 text-xs font-semibold text-brand-600 dark:text-brand-300">
-          Read More  →
+          Read More →
         </p>
       </div>
     </Link>

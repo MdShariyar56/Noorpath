@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Calculator, RotateCcw } from "lucide-react";
 import { BHORI_G, RATE, calculateZakat, num } from "@/lib/zakat";
+import Image from "next/image";
 
 // ২,৮০,০০০ (লাখ-কোটি) গ্রুপিং। ২৮০,০০০ চাইলে "en-US" দাও
 const LOCALE = "en-IN";
@@ -38,9 +39,7 @@ function Bi({ en, bn }) {
 function Section({ en, bn, children }) {
   return (
     <section className="rounded-2xl border border-border bg-card p-5">
-      <h2 className="mb-4 font-bold">
-        {en}
-      </h2>
+      <h2 className="mb-4 font-bold">{en}</h2>
       {children}
     </section>
   );
@@ -69,9 +68,7 @@ function Segment({ options, value, onChange }) {
 function Field({ en, bn, hint, warn, value, onChange, prefix = "৳", suffix }) {
   return (
     <label className="block">
-      <span className="text-sm font-medium">
-        {en}
-      </span>
+      <span className="text-sm font-medium">{en}</span>
       <div className="mt-1.5 flex items-center rounded-xl border border-border bg-background px-3 focus-within:border-brand-500">
         {prefix && <span className="mr-2 text-sm text-muted">{prefix}</span>}
         <input
@@ -85,7 +82,9 @@ function Field({ en, bn, hint, warn, value, onChange, prefix = "৳", suffix }) 
           <span className="ml-2 shrink-0 text-xs text-muted">{suffix}</span>
         )}
       </div>
-      {hint && <span className="mt-1 block text-[11px] text-muted">{hint}</span>}
+      {hint && (
+        <span className="mt-1 block text-[11px] text-muted">{hint}</span>
+      )}
       {warn && (
         <span className="mt-1 block text-[11px] text-amber-600 dark:text-amber-400">
           {warn}
@@ -163,23 +162,22 @@ export default function ZakatCalculator() {
 
   return (
     <div className="space-y-6">
-
-    <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
-        <img loading="lazy"
+      <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
+        <Image
           src="https://imglink.cc/cdn/nVK8A1h5vi.png"
           alt="Zakat Calculator Logo"
+          width={68}
+          height={68}
+          loading="lazy"
           className="h-17 w-17 rounded-full border-2 object-cover"
         />
         <div className="">
           <p className="font-bold text-2xl">Zakat Calculator</p>
           <p className="mt-1 text-sm text-brand-100 flex items-center gap-2">
-              Calculate your zakat easily
+            Calculate your zakat easily
           </p>
         </div>
       </div>
-
-
-     
 
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
         {/* ইনপুট */}
@@ -204,9 +202,7 @@ export default function ZakatCalculator() {
               </div>
 
               <div>
-                <p className="mb-2 text-sm font-medium">
-                  Nisab based on 
-                </p>
+                <p className="mb-2 text-sm font-medium">Nisab based on</p>
                 <Segment
                   value={basis}
                   onChange={setBasis}
@@ -217,7 +213,7 @@ export default function ZakatCalculator() {
                 />
                 <p className="mt-1.5 text-[11px] text-muted">
                   Silver nisab is lower, gold nisab is higher. Scholars differ,
-                  so follow the guidance you trust. 
+                  so follow the guidance you trust.
                 </p>
               </div>
             </div>
@@ -323,30 +319,23 @@ export default function ZakatCalculator() {
             {(RATE * 100).toFixed(1)}% of net wealth 2.5%
           </p>
 
-          <p className={`mt-4 rounded-xl px-3 py-2 text-sm font-medium ${status.tone}`}>
+          <p
+            className={`mt-4 rounded-xl px-3 py-2 text-sm font-medium ${status.tone}`}
+          >
             <Bi en={status.en} bn={status.bn} />
           </p>
 
           <div className="mt-4 divide-y divide-white/15 border-t border-white/15">
+            <Row label={<Bi en="Total assets" />} value={fmt(r.assets)} />
             <Row
-              label={<Bi en="Total assets"  />}
-              value={fmt(r.assets)}
-            />
-            <Row
-              label={<Bi en="Liabilities"  />}
+              label={<Bi en="Liabilities" />}
               value={`− ${fmt(r.liabilities)}`}
             />
-            <Row
-              strong
-              label={<Bi en="Net wealth"  />}
-              value={fmt(r.net)}
-            />
+            <Row strong label={<Bi en="Net wealth" />} value={fmt(r.net)} />
             <Row
               label={
                 <>
-                  <Bi
-                    en={`Nisab (${basisEn})`}
-                  />
+                  <Bi en={`Nisab (${basisEn})`} />
                   <span className="block text-[11px] text-brand-200">
                     {r.nisabGrams} g = {nisabBhori} bhori
                   </span>
@@ -364,9 +353,7 @@ export default function ZakatCalculator() {
           </button>
 
           <p className="mt-4 text-[11px] leading-relaxed text-brand-200">
-            <Bi
-              en="Zakat is due on wealth held for one full lunar year (hawl) that reaches the nisab."
-            />
+            <Bi en="Zakat is due on wealth held for one full lunar year (hawl) that reaches the nisab." />
           </p>
         </aside>
       </div>
@@ -374,9 +361,7 @@ export default function ZakatCalculator() {
       <div className="rounded-2xl border border-border bg-card p-4 text-sm text-foreground/80">
         <p className="mb-1 font-semibold">Please note</p>
         <p>
-          <Bi
-            en="This calculator gives an estimate to help you. Rulings can differ (for example the nisab basis, jewellery, shares and receivables), so please consult a qualified scholar for your situation."
-          />
+          <Bi en="This calculator gives an estimate to help you. Rulings can differ (for example the nisab basis, jewellery, shares and receivables), so please consult a qualified scholar for your situation." />
         </p>
       </div>
     </div>

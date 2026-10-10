@@ -20,6 +20,7 @@ import {
   todayMs,
   upcomingEvents,
 } from "@/lib/hijri";
+import Image from "next/image";
 
 const WD_EN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const ORDER = Array.from({ length: 7 }, (_, i) => (WEEK_START + i) % 7);
@@ -45,9 +46,9 @@ function Card({ title, children }) {
 
 function inDays(ms, today) {
   const n = Math.round((ms - today) / DAY);
-  if (n === 0) return { en: "Today"};
-  if (n === 1) return { en: "Tomorrow"};
-  return { en: `In ${n} days`};
+  if (n === 0) return { en: "Today" };
+  if (n === 1) return { en: "Tomorrow" };
+  return { en: `In ${n} days` };
 }
 
 export default function HijriCalendar() {
@@ -153,10 +154,13 @@ export default function HijriCalendar() {
   return (
     <div className="space-y-6">
       <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
-        <img loading="lazy"
+        <Image
           src="https://imglink.cc/cdn/EvT0jBc0Kq.png"
           alt="Hijri Logo"
+          width={68}
+          height={68}
           className="h-17 w-17 rounded-full border-2 object-cover"
+          loading="lazy"
         />
         <div className="">
           <p className="font-bold text-2xl">Hijri Calendar</p>
@@ -222,7 +226,6 @@ export default function HijriCalendar() {
                 }`}
               >
                 {WD_EN[d]}
-                
               </div>
             ))}
 
@@ -302,7 +305,7 @@ export default function HijriCalendar() {
             <p className="mt-1 text-xl font-bold">
               {sel.day} {selMonth.en} {sel.year} AH
             </p>
-            
+
             <p className="mt-2 text-sm">{fmtFull(selected)}</p>
             {(!isToday || start !== monthStartOf(today, offset)) && (
               <button
@@ -317,9 +320,7 @@ export default function HijriCalendar() {
           <Card title="This month">
             {monthEvents.length === 0 ? (
               <p className="text-sm text-muted">
-                <Bi
-                  en="No listed special days this month."
-                />
+                <Bi en="No listed special days this month." />
               </p>
             ) : (
               <ul className="space-y-3">
@@ -331,15 +332,12 @@ export default function HijriCalendar() {
                     <p className="text-xs text-brand-600 dark:text-brand-300">
                       {e.d} {month.en} · {fmtShort(start + (e.d - 1) * DAY)}
                     </p>
-                    
                   </li>
                 ))}
               </ul>
             )}
             <p className="mt-3 border-t border-border pt-3 text-[11px] text-muted">
-              <Bi
-                en="White days (13, 14, 15): voluntary fasting is recommended, except 13 Dhul Hijjah."
-              />
+              <Bi en="White days (13, 14, 15): voluntary fasting is recommended, except 13 Dhul Hijjah." />
             </p>
           </Card>
 
@@ -386,9 +384,7 @@ export default function HijriCalendar() {
               ))}
             </div>
             <p className="mt-3 text-[11px] leading-relaxed text-muted">
-              <Bi
-                en="Dates follow the Umm al-Qura calendar (Saudi Arabia). In Bangladesh, months begin after the local moon sighting, which can be one day later. Choose −1 if your local date is a day behind."
-              />
+              <Bi en="Dates follow the Umm al-Qura calendar (Saudi Arabia). In Bangladesh, months begin after the local moon sighting, which can be one day later. Choose −1 if your local date is a day behind." />
             </p>
           </Card>
         </div>
@@ -397,9 +393,7 @@ export default function HijriCalendar() {
       <div className="rounded-2xl border border-border bg-card p-4 text-sm text-foreground/80">
         <p className="mb-1 font-semibold">Please note</p>
         <p>
-          <Bi
-            en="These are calculated dates for planning. The start of Ramadan and the Eids are confirmed by moon sighting announcements in your country, and scholars differ on the observance of some days listed here."
-          />
+          <Bi en="These are calculated dates for planning. The start of Ramadan and the Eids are confirmed by moon sighting announcements in your country, and scholars differ on the observance of some days listed here." />
         </p>
       </div>
     </div>

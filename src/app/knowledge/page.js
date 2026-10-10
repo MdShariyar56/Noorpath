@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Lightbulb } from "lucide-react";
 import { getTopics } from "@/lib/api/knowledge";
+import Image from "next/image";
 
 export const metadata = { title: "Islamic Knowledge | NoorPath" };
 
@@ -10,10 +11,13 @@ export default async function KnowledgePage() {
   return (
     <div className="space-y-6">
       <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
-        <img loading="lazy"
+        <Image
           src="https://imglink.cc/cdn/61_khtSBzN.png"
           alt="Hajj Umrah Logo"
-          className="h-17 w-17 border-2 rounded-full bg-brand-700 object-cover"
+          width={68}
+          height={68}
+          loading="lazy"
+          className="h-17 w-17 rounded-full border-2 bg-brand-700 object-cover"
         />
         <div className="">
           <p className="font-bold text-2xl">Islamic Knowledge</p>
@@ -32,12 +36,14 @@ export default async function KnowledgePage() {
           >
             {/* Image */}
             <div className="relative h-40 overflow-hidden">
-              <img loading="lazy"
+              <Image
                 src={t.icon}
                 alt={t.title[0]}
+                width={400}
+                height={200}
+                loading="lazy"
                 className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
               />
-
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
 

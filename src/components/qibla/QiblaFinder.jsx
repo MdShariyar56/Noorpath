@@ -10,6 +10,7 @@ import {
   distanceKm,
   qiblaBearing,
 } from "@/lib/qibla";
+import Image from "next/image";
 
 const CARDINAL_BN = [
   "উত্তর",
@@ -204,9 +205,12 @@ export default function QiblaFinder() {
   return (
     <div className="space-y-6">
       <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
-        <img loading="lazy"
+        <Image
           src="https://imglink.cc/cdn/OboTUzdWPV.png"
           alt="Qibla Logo"
+          width={68}
+          height={68}
+          loading="lazy"
           className="h-17 w-17 rounded-full border-2 object-cover"
         />
         <div className="">
@@ -231,9 +235,7 @@ export default function QiblaFinder() {
           <div aria-live="polite" className="mt-4 text-center">
             {aligned && (
               <p className="font-semibold text-emerald-600 dark:text-emerald-400">
-                <Bi
-                  en="✓ You are facing the Qibla"
-                />
+                <Bi en="✓ You are facing the Qibla" />
               </p>
             )}
             {active && !aligned && (
@@ -253,16 +255,12 @@ export default function QiblaFinder() {
             )}
             {status === "denied" && (
               <p className="mt-2 text-sm text-red-500">
-                <Bi
-                  en="Compass permission was denied. Allow it and try again."
-                />
+                <Bi en="Compass permission was denied. Allow it and try again." />
               </p>
             )}
             {status === "unsupported" && (
               <p className="mx-auto max-w-sm text-sm text-muted">
-                <Bi
-                  en="No compass sensor was found on this device or browser (desktops usually don't have one). The dial is fixed with North (N) at the top, and the 🕋 marks the Qibla direction."
-                />
+                <Bi en="No compass sensor was found on this device or browser (desktops usually don't have one). The dial is fixed with North (N) at the top, and the 🕋 marks the Qibla direction." />
               </p>
             )}
           </div>
@@ -275,18 +273,12 @@ export default function QiblaFinder() {
             <p className="mt-1 text-3xl font-bold text-brand-600 dark:text-brand-300">
               {bearing.toFixed(1)}°
             </p>
-            <p className="text-sm text-muted">
-              {cardinal(bearing)}
-            </p>
-            <p className="text-[11px] text-muted">
-              Measured from true north
-            </p>
+            <p className="text-sm text-muted">{cardinal(bearing)}</p>
+            <p className="text-[11px] text-muted">Measured from true north</p>
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-4">
-            <p className="text-xs text-muted">
-              Distance to the Kaaba
-            </p>
+            <p className="text-xs text-muted">Distance to the Kaaba</p>
             <p className="mt-1 text-xl font-bold">
               {Math.round(distance).toLocaleString("en-US")} km
             </p>
@@ -306,9 +298,7 @@ export default function QiblaFinder() {
               className="mt-3 inline-flex items-center gap-2 rounded-full border border-brand-600 px-4 py-1.5 text-sm font-medium text-brand-600 hover:bg-brand-50 disabled:opacity-60 dark:border-brand-300 dark:text-brand-300 dark:hover:bg-brand-800"
             >
               <Crosshair size={15} />
-              {geo === "loading"
-                ? "Locating..."
-                : "Use my location"}
+              {geo === "loading" ? "Locating..." : "Use my location"}
             </button>
             {geoMsg && (
               <p className="mt-2 text-xs text-red-500">
@@ -319,9 +309,7 @@ export default function QiblaFinder() {
 
           {active && (
             <div className="rounded-2xl border border-border bg-card p-4">
-              <p className="text-xs text-muted">
-                Your heading
-              </p>
+              <p className="text-xs text-muted">Your heading</p>
               <p className="mt-1 text-xl font-bold tabular-nums">
                 {Math.round(heading)}°
               </p>
@@ -335,7 +323,7 @@ export default function QiblaFinder() {
         <ul className="list-disc space-y-2 pl-5">
           {tips.map((t) => (
             <li key={t.en}>
-              <Bi en={t.en}  />
+              <Bi en={t.en} />
             </li>
           ))}
         </ul>
