@@ -105,12 +105,12 @@ export default function LoginForm({ next = "/", registered = false }) {
           />
           Remember me / মনে রাখুন
         </label>
-        <Link
+        {/* <Link
           href="/forgot-password"
           className="font-medium text-brand-600 hover:underline dark:text-brand-300"
         >
           Forgot password? / পাসওয়ার্ড ভুলে গেছেন?
-        </Link>
+        </Link> */}
       </div>
 
       <SubmitButton busy={busy} busyText="Signing in... / প্রবেশ করছি...">
