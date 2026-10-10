@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { LogOut } from "lucide-react";
+import { Bookmark, LogOut } from "lucide-react";
 import { useAuth } from "@/components/auth/AuthProvider";
 
 export default function UserMenu() {
@@ -73,6 +73,14 @@ export default function UserMenu() {
             )}
           </div>
           <div className="my-1 h-px bg-border" />
+                    <Link
+            href="/bookmarks"
+            role="menuitem"
+            onClick={() => setOpen(false)}
+            className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-brand-50 dark:hover:bg-brand-800"
+          >
+            <Bookmark size={16} /> My Bookmarks / আমার বুকমার্ক
+          </Link>
           <button
             role="menuitem"
             onClick={async () => {

@@ -5,7 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Bookmark, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { useAuth } from "@/components/auth/AuthProvider";
-import { addBookmark, listBookmarks, removeBookmark } from "@/lib/api/bookmarks";
+import {
+  addBookmark,
+  listBookmarks,
+  removeBookmark,
+  setLastRead,
+} from "@/lib/api/bookmarks";
 
 export default function SurahReader({ surah }) {
   const router = useRouter();
@@ -136,6 +141,57 @@ export default function SurahReader({ surah }) {
       });
     }
   };
+
+    /* ---------- শেষ পড়া মনে রাখা ---------- */
+
+  const savedRef = useRef(null);
+
+  // পর্দার মাঝামাঝি একটা আয়াত ৪ সেকেন্ড থাকলে সেটাকে "শেষ পড়া" ধরে সেভ করি
+  useEffect(() => {
+    if (!user) return;
+
+    const visible = new Set();
+    let candidate = null;
+    let timer = null;
+
+    const schedule = () => {
+      const current = visible.size ? Math.min(...visible) : null;
+      if (current === candidate) return;
+      candidate = current;
+      clearTimeout(timer);
+      if (current === null) return;
+
+      timer = setTimeout(() => {
+        const key = `${surah.number}:${current}`;
+        if (savedRef.current === key) return;
+        savedRef.current = key;
+        setLastRead(surah.number, current).catch(() => {});
+      }, 4000);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          const n = Number(e.target.id.replace("ayah-", ""));
+          if (e.isIntersecting) visible.add(n);
+          else visible.delete(n);
+        }
+        schedule();
+      },
+      // পর্দার উপর থেকে ৩৫% থেকে ৫৫% এর মাঝের সরু ফালি
+      { rootMargin: "-35% 0px -45% 0px" }
+    );
+
+    surah.ayahs.forEach((a) => {
+      const el = document.getElementById(`ayah-${a.number}`);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [user?.id, surah.number]);
 
   /* ---------- দেখানো ---------- */
 

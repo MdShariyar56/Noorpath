@@ -47,7 +47,7 @@ function Item({ it, n }) {
               href={it.href}
               className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600 dark:text-brand-300"
             >
-              {it.cta[0]} / {it.cta[1]} <ArrowRight size={14} />
+              {it.cta[0]}  <ArrowRight size={14} />
             </Link>
           )}
         </div>

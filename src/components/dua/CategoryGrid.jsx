@@ -50,7 +50,7 @@ export default function CategoryGrid({ categories }) {
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Search category (e.g. travel, সফর)..."
+          placeholder="Search category e.g. travel..."
           className="w-full bg-transparent text-sm outline-none placeholder:text-muted"
         />
       </div>
@@ -69,9 +69,9 @@ export default function CategoryGrid({ categories }) {
             <span className="grid h-12 w-12 place-items-center rounded-full bg-brand-50 text-2xl dark:bg-brand-800">
               {ICONS[c.slug] || "📿"}
             </span>
-            <span className="mt-3 text-sm font-semibold">{c.name}</span>
-            {c.nameEn && (
-              <span className="text-[11px] text-muted">{c.nameEn}</span>
+            <span className="mt-3 text-sm font-semibold">{c.nameEn}</span>
+            {c.name && (
+              <span className="text-[11px] text-muted">{c.name}</span>
             )}
             <span className="mt-1 text-[11px] text-brand-600 dark:text-brand-300">
               {c.subCount} sections

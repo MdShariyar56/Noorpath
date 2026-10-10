@@ -33,7 +33,7 @@ export default function Hero() {
       className="relative overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat p-6 text-white md:p-10"
   style={{
     backgroundImage:
-      "linear-gradient(to right, rgba(7,42,33,.92), rgba(7,42,33,.45)), url('https://imglink.cc/cdn/0WgB99MI-5.jpg')",
+      "linear-gradient(to right, rgba(7,42,33,.80), rgba(7,42,33,.10)), url('https://imglink.cc/cdn/Qe6BRQZi0o.jpg')",
   }}
     >
       {/* সাজসজ্জার বৃত্ত */}
@@ -81,7 +81,7 @@ export default function Hero() {
         </div>
 
         {/* তারিখ/হিজরি/লোকেশন কার্ড */}
-        <div className="space-y-4 self-center rounded-xl bg-black/25 p-5 backdrop-blur-sm">
+        <div className="space-y-4 self-center rounded-xl p-5 ">
           {info.map(({ icon: Icon, label, value }) => (
             <div key={label} className="flex items-start gap-3">
               <Icon size={20} className="mt-0.5 shrink-0 text-gold-400" />

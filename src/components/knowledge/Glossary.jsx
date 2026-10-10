@@ -23,18 +23,18 @@ export default function Glossary({ terms }) {
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Search terms / শব্দ খুঁজুন..."
+          placeholder="Search terms..."
           className="w-full bg-transparent text-sm outline-none placeholder:text-muted"
         />
       </div>
 
       <p className="text-xs text-muted">
-        {list.length} of {terms.length} terms / {terms.length}টির মধ্যে {list.length}টি
+        {list.length} of {terms.length} terms
       </p>
 
       {list.length === 0 && (
         <p className="py-10 text-center text-muted">
-          No term found. / কোনো শব্দ পাওয়া যায়নি।
+          No term found.
         </p>
       )}
 

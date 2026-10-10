@@ -3,16 +3,26 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, Copy, Pause, Play } from "lucide-react";
 import { audioUrl } from "@/lib/dua-config";
+import useBookmarks from "@/hooks/useBookmarks";
+import BookmarkButton, { BookmarkError } from "@/components/bookmarks/BookmarkButton";
 
-function DuaCard({ dua, show, playing, failed, onToggle }) {
+function DuaCard({ dua, show, playing, failed, onToggle, bookmark }) {
   const [copied, setCopied] = useState(false);
-    // বাংলা চালু থাকলে বাংলা উচ্চারণ, English চালু থাকলে ইংরেজি উচ্চারণ
-  const picked = [...new Set([show.bn && dua.trBn, show.en && dua.tr].filter(Boolean))];
+
+  // বাংলা চালু থাকলে বাংলা উচ্চারণ, English চালু থাকলে ইংরেজি উচ্চারণ
+  const picked = [
+    ...new Set([show.bn && dua.trBn, show.en && dua.tr].filter(Boolean)),
+  ];
   const translits = picked.length ? picked : [dua.trBn || dua.tr].filter(Boolean);
+
   const refText =
     [...new Set([show.bn && dua.ref, show.en && dua.refEn].filter(Boolean))].join(
       "  |  "
     ) || dua.ref;
+
+  const benefitsBn = dua.benefits || [];
+  const benefitsEn = dua.benefitsEn || [];
+
   const copy = async () => {
     const parts = [
       dua.title,
@@ -35,22 +45,31 @@ function DuaCard({ dua, show, playing, failed, onToggle }) {
       className="scroll-mt-24 rounded-2xl border border-border bg-card p-5"
     >
       <div className="flex items-start gap-2">
-                <div className="flex-1">
+        <div className="flex-1">
           <h3 className="font-semibold">{dua.title}</h3>
           {show.en && dua.titleEn && (
             <p className="mt-0.5 text-xs text-muted">{dua.titleEn}</p>
           )}
         </div>
-        <button
-          onClick={copy}
-          aria-label="Copy dua"
-          className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-muted hover:bg-brand-50 hover:text-brand-600 dark:hover:bg-brand-800"
-        >
-          {copied ? <Check size={16} /> : <Copy size={16} />}
-        </button>
+
+        <div className="flex shrink-0 items-center gap-1">
+          <BookmarkButton
+            marked={bookmark.marked}
+            busy={bookmark.busy}
+            loggedIn={bookmark.loggedIn}
+            onClick={bookmark.onToggle}
+          />
+          <button
+            onClick={copy}
+            aria-label="Copy dua"
+            className="grid h-8 w-8 place-items-center rounded-full text-muted hover:bg-brand-50 hover:text-brand-600 dark:hover:bg-brand-800"
+          >
+            {copied ? <Check size={16} /> : <Copy size={16} />}
+          </button>
+        </div>
       </div>
 
-            {show.bn && dua.intro && (
+      {show.bn && dua.intro && (
         <p className="mt-2 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-800 dark:bg-amber-900/20 dark:text-amber-200">
           {dua.intro}
         </p>
@@ -70,7 +89,7 @@ function DuaCard({ dua, show, playing, failed, onToggle }) {
         </p>
       )}
 
-            {show.tr &&
+      {show.tr &&
         translits.map((t, i) => (
           <p
             key={i}
@@ -79,6 +98,7 @@ function DuaCard({ dua, show, playing, failed, onToggle }) {
             {t}
           </p>
         ))}
+
       {show.bn && dua.bn && (
         <p className="mt-3 whitespace-pre-line text-[15px] leading-relaxed">
           {dua.bn}
@@ -90,24 +110,24 @@ function DuaCard({ dua, show, playing, failed, onToggle }) {
         </p>
       )}
 
-            {((show.bn && dua.benefits.length > 0) ||
-        (show.en && dua.benefitsEn.length > 0)) && (
+      {((show.bn && benefitsBn.length > 0) ||
+        (show.en && benefitsEn.length > 0)) && (
         <details className="mt-3 rounded-lg bg-background px-3 py-2 text-sm">
           <summary className="cursor-pointer font-medium text-brand-600 dark:text-brand-300">
             ফজিলত ও উপকারিতা / Benefits
           </summary>
 
-          {show.bn && dua.benefits.length > 0 && (
+          {show.bn && benefitsBn.length > 0 && (
             <ul className="mt-2 list-disc space-y-1 pl-5 text-foreground/80">
-              {dua.benefits.map((b, i) => (
+              {benefitsBn.map((b, i) => (
                 <li key={i}>{b}</li>
               ))}
             </ul>
           )}
 
-          {show.en && dua.benefitsEn.length > 0 && (
+          {show.en && benefitsEn.length > 0 && (
             <ul className="mt-3 list-disc space-y-1 pl-5 text-foreground/70">
-              {dua.benefitsEn.map((b, i) => (
+              {benefitsEn.map((b, i) => (
                 <li key={i}>{b}</li>
               ))}
             </ul>
@@ -117,6 +137,7 @@ function DuaCard({ dua, show, playing, failed, onToggle }) {
 
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
         <p className="text-xs text-muted">{refText}</p>
+
         {dua.audio && (
           <div className="flex items-center gap-2">
             {failed && (
@@ -136,11 +157,13 @@ function DuaCard({ dua, show, playing, failed, onToggle }) {
   );
 }
 
-export default function DuaList({ duas }) {
+export default function DuaList({ duas, category, subId }) {
   const [show, setShow] = useState({ tr: true, bn: true, en: true });
   const [playing, setPlaying] = useState(null);
   const [failed, setFailed] = useState(null);
   const audioRef = useRef(null);
+
+  const bm = useBookmarks("dua", { prefix: `${category}:${subId}:` });
 
   const stop = () => {
     audioRef.current?.pause();
@@ -197,16 +220,31 @@ export default function DuaList({ duas }) {
         ))}
       </div>
 
-      {duas.map((d) => (
-        <DuaCard
-          key={d.id}
-          dua={d}
-          show={show}
-          playing={playing === d.id}
-          failed={failed === d.id}
-          onToggle={toggle}
-        />
-      ))}
+      <BookmarkError error={bm.error} />
+
+      {duas.map((d) => {
+        const target = `${category}:${subId}:${d.id}`;
+        // তালিকায় দেখানোর নাম: "ইংরেজি | বাংলা"
+        const label = (d.titleEn ? `${d.titleEn} | ${d.title}` : d.title).slice(0, 140);
+
+        return (
+          <DuaCard
+            key={d.id}
+            dua={d}
+            show={show}
+            playing={playing === d.id}
+            failed={failed === d.id}
+            onToggle={toggle}
+            bookmark={{
+              marked: bm.marked.has(target),
+              busy: bm.pending.has(target),
+              loggedIn: bm.loggedIn,
+              onToggle: () =>
+                bm.toggle(target, label, `/dua/${category}/${subId}#dua-${d.id}`),
+            }}
+          />
+        );
+      })}
     </div>
   );
 }

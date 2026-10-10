@@ -6,7 +6,9 @@ import { getSubCategory } from "@/lib/api/dua";
 export async function generateMetadata({ params }) {
   const { sub } = await params;
   const data = await getSubCategory(sub);
-  return { title: `${data ? data.sub.titleEn || data.sub.title : "Dua"} | NoorPath` };
+  return {
+    title: `${data ? data.sub.titleEn || data.sub.title : "Dua"} | NoorPath`,
+  };
 }
 
 export default async function SubCategoryPage({ params }) {
@@ -21,17 +23,16 @@ export default async function SubCategoryPage({ params }) {
           href={`/dua/${category}`}
           className="text-xs text-brand-100 hover:underline"
         >
-           ← {data.category?.name}
+          ← {data.category?.name}
           {data.category?.nameEn && ` / ${data.category.nameEn}`}
         </Link>
-            <h1 className="mt-2 text-xl font-bold">{data.sub.title}</h1>
+        <h1 className="mt-2 text-xl font-bold">{data.sub.title}</h1>
         {data.sub.titleEn && (
           <p className="text-sm text-brand-100">{data.sub.titleEn}</p>
         )}
         <p className="mt-1 text-xs text-brand-200">{data.duas.length} duas</p>
       </div>
-
-      <DuaList duas={data.duas} />
+      <DuaList duas={data.duas} category={category} subId={sub} />
     </div>
   );
 }

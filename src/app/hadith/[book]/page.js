@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import SectionList from "@/components/hadith/SectionList";
 import { getBook } from "@/lib/api/hadith";
 import index from "@/data/hadith-sections.json";
+import SavedHadiths from "@/components/hadith/SavedHadiths";
 
 export async function generateMetadata({ params }) {
   const { book } = await params;
@@ -28,7 +29,7 @@ export default async function BookPage({ params }) {
           {b.bn} · {meta.sections.length} chapters
         </p>
       </div>
-
+      <SavedHadiths book={b.id} />
       <SectionList bookId={b.id} sections={meta.sections} />
     </div>
   );

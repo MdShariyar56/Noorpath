@@ -15,21 +15,21 @@ export const HAJJ_INFO = [
 
 export const HAJJ_TYPES = [
   {
-    name: ["Tamattu'", "তামাত্তু"],
+    name: ["Tamattu"],
     text: [
       "Perform Umrah first, leave ihram, then enter ihram for Hajj on 8 Dhul Hijjah. A sacrifice (hady) is required. Common for pilgrims travelling from abroad.",
       "প্রথমে উমরা করে ইহরাম খুলুন, তারপর ৮ জিলহজ হজের ইহরাম বাঁধুন। কুরবানি (হাদি) দিতে হয়। বিদেশ থেকে আসা হাজীদের মধ্যে প্রচলিত।",
     ],
   },
   {
-    name: ["Qiran", "কিরান"],
+    name: ["Qiran"],
     text: [
       "Enter ihram for Umrah and Hajj together and stay in ihram until the Eid-day rites. A sacrifice is required.",
       "উমরা ও হজের জন্য একসাথে ইহরাম বাঁধুন এবং ঈদের দিনের আমল পর্যন্ত ইহরামে থাকুন। কুরবানি (হাদি) দিতে হয়।",
     ],
   },
   {
-    name: ["Ifrad", "ইফরাদ"],
+    name: ["Ifrad"],
     text: [
       "Perform Hajj only. The sacrifice is not required (it is voluntary).",
       "শুধু হজ করা। হাদি বাধ্যতামূলক নয় (ঐচ্ছিক)।",
@@ -40,8 +40,8 @@ export const HAJJ_TYPES = [
 export const HAJJ_STEPS = [
   {
     id: "ihram",
-    title: ["Ihram", "ইহরাম"],
-    when: ["Before the rites begin · 8 Dhul Hijjah for Tamattu'", "আমল শুরুর আগে · তামাত্তুতে ৮ জিলহজ"],
+    title: ["Ihram"],
+    when: ["Before the rites begin · 8 Dhul Hijjah for Tamattu"],
     points: [
       [
         "Take a bath (ghusl), then wear ihram: for men two white unstitched sheets; for women ordinary modest clothing (no niqab or gloves).",
@@ -59,8 +59,8 @@ export const HAJJ_STEPS = [
   },
   {
     id: "mina",
-    title: ["Mina", "মিনা"],
-    when: ["8 Dhul Hijjah (Yawm at-Tarwiyah)", "৮ জিলহজ (ইয়াওমুত তারউইয়া)"],
+    title: ["Mina"],
+    when: ["8 Dhul Hijjah (Yawm at-Tarwiyah)"],
     points: [
       [
         "Go to Mina and stay there. Pray each prayer at its time, with the four-rak'ah prayers shortened to two (not combined), from Dhuhr until the next Fajr.",
@@ -78,8 +78,8 @@ export const HAJJ_STEPS = [
   },
   {
     id: "arafah",
-    title: ["Standing at Arafah", "আরাফায় অবস্থান (উকুফ)"],
-    when: ["9 Dhul Hijjah", "৯ জিলহজ"],
+    title: ["Standing at Arafah"],
+    when: ["9 Dhul Hijjah"],
     points: [
       [
         "This is the most important rite of Hajj. Whoever misses standing at Arafah altogether has missed Hajj.",
@@ -101,8 +101,8 @@ export const HAJJ_STEPS = [
   },
   {
     id: "muzdalifah",
-    title: ["Muzdalifah", "মুজদালিফা"],
-    when: ["Night of 9–10 Dhul Hijjah", "৯-১০ জিলহজের রাত"],
+    title: ["Muzdalifah"],
+    when: ["Night of 9–10 Dhul Hijjah"],
     points: [
       [
         "After sunset, leave Arafah calmly for Muzdalifah.",
@@ -128,8 +128,8 @@ export const HAJJ_STEPS = [
   },
   {
     id: "eid-day",
-    title: ["Rites of Eid day", "ঈদের দিনের আমল"],
-    when: ["10 Dhul Hijjah (Yawm an-Nahr)", "১০ জিলহজ (ইয়াওমুন নাহর)"],
+    title: ["Rites of Eid day"],
+    when: ["10 Dhul Hijjah (Yawm an-Nahr)"],
     points: [
       [
         "Stone Jamrat al-Aqabah (the large Jamarah) with 7 pebbles, saying “Allahu Akbar” with each. Stop the Talbiyah when you begin.",
@@ -159,8 +159,8 @@ export const HAJJ_STEPS = [
   },
   {
     id: "tashreeq",
-    title: ["Days of Tashreeq", "আইয়ামে তাশরিক"],
-    when: ["11, 12 and 13 Dhul Hijjah", "১১, ১২ ও ১৩ জিলহজ"],
+    title: ["Days of Tashreeq"],
+    when: ["11, 12 and 13 Dhul Hijjah"],
     points: [
       [
         "Stay in Mina, remembering Allah and making takbir.",
@@ -178,8 +178,8 @@ export const HAJJ_STEPS = [
   },
   {
     id: "farewell",
-    title: ["Farewell Tawaf", "বিদায়ি তাওয়াফ"],
-    when: ["Before leaving Makkah", "মক্কা ছাড়ার আগে"],
+    title: ["Farewell Tawaf"],
+    when: ["Before leaving Makkah"],
     points: [
       [
         "Perform Tawaf al-Wada' as the last act before you leave Makkah.",
@@ -211,8 +211,8 @@ export const UMRAH_INFO = [
 export const UMRAH_STEPS = [
   {
     id: "u-ihram",
-    title: ["Ihram at the Miqat", "মীকাতে ইহরাম"],
-    when: ["Before entering Makkah", "মক্কায় প্রবেশের আগে"],
+    title: ["Ihram at the Miqat"],
+    when: ["Before entering Makkah"],
     points: [
       [
         "Take a bath (ghusl) and wear ihram: for men two white unstitched sheets; for women ordinary modest clothing (no niqab or gloves).",
@@ -234,8 +234,8 @@ export const UMRAH_STEPS = [
   },
   {
     id: "u-tawaf",
-    title: ["Tawaf", "তাওয়াফ"],
-    when: ["At the Kaaba", "কাবায়"],
+    title: ["Tawaf"],
+    when: ["At the Kaaba"],
     points: [
       [
         "Be in a state of wudu. Stop the Talbiyah when you begin Tawaf.",
@@ -261,8 +261,8 @@ export const UMRAH_STEPS = [
   },
   {
     id: "u-prayer",
-    title: ["Two rak'ah and Zamzam", "দুই রাকাত নামাজ ও জমজম"],
-    when: ["After Tawaf", "তাওয়াফের পর"],
+    title: ["Two rak'ah and Zamzam"],
+    when: ["After Tawaf"],
     points: [
       [
         "Pray two rak'ah behind Maqam Ibrahim if possible; if it is crowded, pray anywhere in the Haram.",
@@ -273,8 +273,8 @@ export const UMRAH_STEPS = [
   },
   {
     id: "u-sai",
-    title: ["Sa'i", "সাঈ"],
-    when: ["Between Safa and Marwa", "সাফা ও মারওয়ার মাঝে"],
+    title: ["Sa'i"],
+    when: ["Between Safa and Marwa"],
     points: [
       [
         "Start at Safa. Going from Safa to Marwa counts as one, and back as two, so the 7th ends at Marwa.",
@@ -292,7 +292,7 @@ export const UMRAH_STEPS = [
   },
   {
     id: "u-halq",
-    title: ["Shave or trim", "মাথা মুণ্ডন বা চুল ছাঁটা"],
+    title: ["Shave or trim"],
     when: ["Final step", "শেষ ধাপ"],
     points: [
       [
@@ -314,7 +314,7 @@ export const UMRAH_STEPS = [
 export const DUAS = [
   {
     id: "talbiyah",
-    title: ["The Talbiyah", "তালবিয়া"],
+    title: ["The Talbiyah"],
     arabic:
       "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ",
     translit:
@@ -327,7 +327,7 @@ export const DUAS = [
   },
   {
     id: "tawaf",
-    title: ["During Tawaf (between the Yemeni corner and the Black Stone)", "তাওয়াফের সময় (রুকনে ইয়ামানি ও হাজরে আসওয়াদের মাঝে)"],
+    title: ["During Tawaf (between the Yemeni corner and the Black Stone)"],
     arabic:
       "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
     translit:
@@ -340,7 +340,7 @@ export const DUAS = [
   },
   {
     id: "maqam",
-    title: ["Approaching Maqam Ibrahim", "মাকামে ইবরাহিমের কাছে যাওয়ার সময়"],
+    title: ["Approaching Maqam Ibrahim"],
     arabic: "وَاتَّخِذُوا مِنْ مَقَامِ إِبْرَاهِيمَ مُصَلًّى",
     translit: "Wattakhidhu min maqami Ibrahima musalla.",
     meaning: [
@@ -351,7 +351,7 @@ export const DUAS = [
   },
   {
     id: "safa-verse",
-    title: ["When approaching Safa", "সাফার কাছে যাওয়ার সময়"],
+    title: ["When approaching Safa"],
     arabic: "إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ",
     translit: "Innas-Safa wal-Marwata min sha'a'irillah.",
     meaning: [
@@ -362,7 +362,7 @@ export const DUAS = [
   },
   {
     id: "safa-dhikr",
-    title: ["Dhikr at Safa and Marwa", "সাফা ও মারওয়ায় জিকির"],
+    title: ["Dhikr at Safa and Marwa"],
     arabic:
       "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ أَنْجَزَ وَعْدَهُ وَنَصَرَ عَبْدَهُ وَهَزَمَ الْأَحْزَابَ وَحْدَهُ",
     translit:
@@ -375,7 +375,7 @@ export const DUAS = [
   },
   {
     id: "arafah",
-    title: ["Best dua on the Day of Arafah", "আরাফার দিনের শ্রেষ্ঠ দুয়া"],
+    title: ["Best dua on the Day of Arafah"],
     arabic:
       "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
     translit:
@@ -388,7 +388,7 @@ export const DUAS = [
   },
   {
     id: "jamarat",
-    title: ["With each pebble at the Jamarat", "জামরায় প্রতিটি কঙ্করের সাথে"],
+    title: ["With each pebble at the Jamarat"],
     arabic: "اللَّهُ أَكْبَرُ",
     translit: "Allahu Akbar.",
     meaning: ["Allah is the Greatest.", "আল্লাহ সবচেয়ে বড়।"],
@@ -399,7 +399,7 @@ export const DUAS = [
 export const CHECKLIST = [
   {
     id: "docs",
-    title: ["Documents", "ডকুমেন্ট"],
+    title: ["Documents"],
     items: [
       { id: "passport", text: ["Passport with enough validity", "পর্যাপ্ত মেয়াদসহ পাসপোর্ট"] },
       { id: "visa", text: ["Visa and Hajj or Umrah permit confirmation", "ভিসা এবং হজ বা উমরার অনুমতির নিশ্চিতকরণ"] },
@@ -412,7 +412,7 @@ export const CHECKLIST = [
   },
   {
     id: "clothing",
-    title: ["Clothing", "পোশাক"],
+    title: ["Clothing"],
     items: [
       { id: "ihram", text: ["Ihram sheets, two sets (men)", "ইহরামের কাপড়, দুই সেট (পুরুষ)"] },
       { id: "modest", text: ["Comfortable, modest clothing", "আরামদায়ক ও শালীন পোশাক"] },
@@ -422,7 +422,7 @@ export const CHECKLIST = [
   },
   {
     id: "health",
-    title: ["Health", "স্বাস্থ্য"],
+    title: ["Health"],
     items: [
       { id: "meds", text: ["Personal medicines with prescriptions", "নিজের ওষুধ ও প্রেসক্রিপশন"] },
       { id: "firstaid", text: ["First aid: plasters, pain relief, oral rehydration salts", "প্রাথমিক চিকিৎসা: ব্যান্ডেজ, ব্যথার ওষুধ, খাবার স্যালাইন"] },
@@ -433,7 +433,7 @@ export const CHECKLIST = [
   },
   {
     id: "worship",
-    title: ["Worship", "ইবাদত"],
+    title: ["Worship"],
     items: [
       { id: "quran", text: ["Pocket Quran or Quran app", "পকেট কুরআন বা কুরআন অ্যাপ"] },
       { id: "duabook", text: ["Dua book or this guide saved offline", "দুয়ার বই বা অফলাইনে সেভ করা এই গাইড"] },
@@ -444,7 +444,7 @@ export const CHECKLIST = [
   },
   {
     id: "money",
-    title: ["Money and gadgets", "টাকা ও গ্যাজেট"],
+    title: ["Money and gadgets"],
     items: [
       { id: "cash", text: ["Some Saudi riyal cash and a card", "কিছু সৌদি রিয়াল নগদ ও একটি কার্ড"] },
       { id: "powerbank", text: ["Power bank and charger", "পাওয়ার ব্যাংক ও চার্জার"] },

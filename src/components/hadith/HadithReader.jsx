@@ -3,6 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Check, ChevronLeft, ChevronRight, Copy } from "lucide-react";
+import useBookmarks from "@/hooks/useBookmarks";
+import BookmarkButton, { BookmarkError } from "@/components/bookmarks/BookmarkButton";
+
 
 const TONES = {
   good: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200",
@@ -35,6 +38,8 @@ export default function HadithReader({ book, section, hadiths, prev, next }) {
   const [showBn, setShowBn] = useState(true);
   const [showEn, setShowEn] = useState(true);
   const [copied, setCopied] = useState(null);
+  const bm = useBookmarks("hadith", { prefix: `${book.id}:${section.id}:` });
+  const tgt = (h) => `${book.id}:${section.id}:${h.number}`;
 
   const copy = async (h) => {
     const parts = [
@@ -89,14 +94,16 @@ export default function HadithReader({ book, section, hadiths, prev, next }) {
         ))}
       </div>
 
+      <BookmarkError error={bm.error} />
       {/* হাদিস তালিকা */}
       <div className="space-y-4">
         {hadiths.map((h) => {
           const grade = getGrade(h.grades, book.id);
           return (
-            <article
+                        <article
               key={h.number}
-              className="rounded-2xl border border-border bg-card p-5"
+              id={`hadith-${h.number}`}
+              className="scroll-mt-24 rounded-2xl border border-border bg-card p-5"
             >
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rounded-full bg-brand-600 px-3 py-1 text-xs font-bold text-white">
@@ -115,13 +122,27 @@ export default function HadithReader({ book, section, hadiths, prev, next }) {
                     {grade.label}
                   </span>
                 )}
-                <button
-                  onClick={() => copy(h)}
-                  aria-label="Copy hadith"
-                  className="ml-auto grid h-8 w-8 place-items-center rounded-full text-muted hover:bg-brand-50 hover:text-brand-600 dark:hover:bg-brand-800"
-                >
-                  {copied === h.number ? <Check size={16} /> : <Copy size={16} />}
-                </button>
+                                <div className="ml-auto flex items-center gap-1">
+                  <BookmarkButton
+                    marked={bm.marked.has(tgt(h))}
+                    busy={bm.pending.has(tgt(h))}
+                    loggedIn={bm.loggedIn}
+                    onClick={() =>
+                      bm.toggle(
+                        tgt(h),
+                        `${book.name} · Hadith ${h.number} | ${book.bn} · হাদিস ${h.number}`,
+                        `/hadith/${book.id}/${section.id}#hadith-${h.number}`
+                      )
+                    }
+                  />
+                  <button
+                    onClick={() => copy(h)}
+                    aria-label="Copy hadith"
+                    className="grid h-8 w-8 place-items-center rounded-full text-muted hover:bg-brand-50 hover:text-brand-600 dark:hover:bg-brand-800"
+                  >
+                    {copied === h.number ? <Check size={16} /> : <Copy size={16} />}
+                  </button>
+                </div>
               </div>
 
               {h.ar && (

@@ -24,18 +24,46 @@ export default async function TopicPage({ params }) {
   return (
     <div className="mx-auto max-w-4xl space-y-8">
       <div
-        className={`rounded-2xl bg-gradient-to-br p-6 text-white md:p-8 ${topic.bg}`}
+        className="relative overflow-hidden rounded-2xl bg-cover bg-center p-6 text-white shadow-sm md:p-8"
+        style={{
+          backgroundImage: `linear-gradient(
+      90deg,
+      rgba(7, 42, 33, 0.95),
+      rgba(7, 42, 33, 0.75),
+      rgba(7, 42, 33, 0.35)
+    ), url(${topic.icon})`,
+        }}
       >
-        <Link href="/knowledge" className="text-xs text-white/80 hover:underline">
-          ← Islamic Knowledge / ইসলামিক জ্ঞান
-        </Link>
-        <p className="mt-4 text-5xl">{topic.icon}</p>
-        <h1 className="mt-3 text-2xl font-bold leading-tight md:text-3xl">
-          {topic.title[0]}
-        </h1>
-        <p className="mt-1 text-lg text-white/85">{topic.title[1]}</p>
-        <p className="mt-4 text-sm text-white/90">{topic.intro[0]}</p>
-        <p className="mt-1 text-sm text-white/75">{topic.intro[1]}</p>
+        <div className="relative">
+          {/* Back Link */}
+          <Link
+            href="/knowledge"
+            className="inline-flex items-center text-xs font-medium text-white/80 transition hover:text-white"
+          >
+            ← Islamic Knowledge
+          </Link>
+
+          {/* Content */}
+          <div className="mt-6 max-w-2xl">
+            <h1 className="text-2xl font-bold leading-tight md:text-3xl">
+              {topic.title[0]}
+            </h1>
+
+            <p className="mt-1 text-lg font-medium text-white/85">
+              {topic.title[1]}
+            </p>
+
+            <div className="mt-4 space-y-1">
+              <p className="text-sm leading-6 text-white/90">
+                {topic.intro[0]}
+              </p>
+
+              <p className="text-sm leading-6 text-white/70">
+                {topic.intro[1]}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {glossary ? (
@@ -46,7 +74,7 @@ export default async function TopicPage({ params }) {
 
       {topic.refs?.length > 0 && (
         <section className="rounded-2xl border border-border bg-card p-5">
-          <h2 className="mb-2 font-bold">Sources / সূত্র</h2>
+          <h2 className="mb-2 font-bold">Sources </h2>
           <ul className="list-disc space-y-1 pl-5 text-sm text-foreground/80">
             {topic.refs.map((r) => (
               <li key={r}>{r}</li>
@@ -56,28 +84,50 @@ export default async function TopicPage({ params }) {
       )}
 
       <div className="rounded-2xl border border-border bg-card p-4 text-sm text-foreground/80">
-        <p className="mb-1 font-semibold">Please note / জেনে রাখুন</p>
+        <p className="mb-1 font-semibold">Please note</p>
         <p>
           This is a general educational summary. For rulings on your specific
           situation, please consult a qualified scholar.
           <span className="block opacity-75">
-            এটি একটি সাধারণ শিক্ষামূলক সারসংক্ষেপ। আপনার নির্দিষ্ট অবস্থার বিধানের জন্য
-            একজন যোগ্য আলেমের পরামর্শ নিন।
+            এটি একটি সাধারণ শিক্ষামূলক সারসংক্ষেপ। আপনার নির্দিষ্ট অবস্থার
+            বিধানের জন্য একজন যোগ্য আলেমের পরামর্শ নিন।
           </span>
         </p>
       </div>
 
       <section>
-        <h2 className="mb-3 text-lg font-bold">More topics / আরও টপিক</h2>
-        <div className="flex flex-wrap gap-2">
+        <h2 className="mb-3 text-lg font-bold">More topics</h2>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {others.map((t) => (
             <Link
               key={t.slug}
               href={`/knowledge/${t.slug}`}
-              className="rounded-full border border-border bg-card px-4 py-1.5 text-center text-sm leading-tight hover:border-brand-300"
+              className="group flex items-center gap-3 rounded-xl border border-border bg-card p-3 transition-colors duration-300 hover:border-brand-300"
             >
-              {t.icon} {t.title[0]}
-              <span className="block text-[11px] text-muted">{t.title[1]}</span>
+              {/* Topic Image */}
+              <div className="h-14 w-14 shrink-0 overflow-hidden rounded-lg">
+                <img
+                  src={t.icon}
+                  alt={t.title[0]}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+
+              {/* Topic Info */}
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold text-foreground">
+                  {t.title[0]}
+                </p>
+
+                <span className="mt-0.5 block truncate text-[11px] text-muted">
+                  {t.title[1]}
+                </span>
+              </div>
+
+              {/* Arrow */}
+              <span className="ml-auto shrink-0 text-sm text-muted transition-transform duration-300 group-hover:translate-x-1 group-hover:text-brand-600 dark:group-hover:text-brand-300">
+                →
+              </span>
             </Link>
           ))}
         </div>

@@ -1,7 +1,15 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, BookText, HandHeart, LayoutGrid, Newspaper } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  BookText,
+  HandHeart,
+  LayoutGrid,
+  Newspaper,
+} from "lucide-react";
 import Highlight from "./Highlight";
 import { fmtDate } from "@/lib/date";
+import Image from "next/image";
 
 const card =
   "block rounded-2xl border border-border bg-card p-4 transition hover:border-brand-300 hover:shadow-md";
@@ -18,7 +26,7 @@ function Group({ icon: Icon, title, count, limit, moreHref, note, children }) {
         </h2>
         {moreHref && count > limit && (
           <Link href={moreHref} className={label}>
-            See all / সব দেখুন →
+            See all →
           </Link>
         )}
       </div>
@@ -42,26 +50,30 @@ export function QuranGroup({ data, terms, limit, moreHref }) {
   return (
     <Group
       icon={BookOpen}
-      title="Quran / কুরআন"
+      title="Quran"
       count={total}
       limit={limit}
       moreHref={moreHref}
       note={
         count > ayahs.length && limit > 4
-          ? `Showing the first ${ayahs.length} of ${count} verses. / ${count}টির মধ্যে প্রথম ${ayahs.length}টি আয়াত দেখানো হচ্ছে।`
+          ? `Showing the first ${ayahs.length} of ${count} verses.`
           : undefined
       }
     >
       {failed && (
         <p className="rounded-xl border border-border bg-card p-3 text-sm text-red-500">
-          Quran text search is unavailable right now. / কুরআনের লেখায় সার্চ এখন পাওয়া যাচ্ছে না।
+          Quran text search is unavailable right now.
         </p>
       )}
       {items.map((it) => {
         if (it.k === "direct") {
           return (
-            <Link key="direct" href={`/quran/${it.surah}#ayah-${it.ayah}`} className={card}>
-              <p className={label}>Go to verse / আয়াতে যান</p>
+            <Link
+              key="direct"
+              href={`/quran/${it.surah}#ayah-${it.ayah}`}
+              className={card}
+            >
+              <p className={label}>Go to verse</p>
               <p className="mt-1 flex items-center gap-2 font-semibold">
                 Surah {it.surah} ({it.name}), Ayah {it.ayah}
                 <ArrowRight size={16} />
@@ -71,10 +83,14 @@ export function QuranGroup({ data, terms, limit, moreHref }) {
         }
         if (it.k === "surah") {
           return (
-            <Link key={`s${it.number}`} href={`/quran/${it.number}`} className={card}>
+            <Link
+              key={`s${it.number}`}
+              href={`/quran/${it.number}`}
+              className={card}
+            >
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <p className={label}>Surah / সূরা {it.number}</p>
+                  <p className={label}>Surah : {it.number}</p>
                   <p className="font-semibold">
                     <Highlight text={it.englishName} terms={terms} />
                   </p>
@@ -83,14 +99,18 @@ export function QuranGroup({ data, terms, limit, moreHref }) {
                   </p>
                 </div>
                 <span className="font-arabic text-2xl text-brand-600 dark:text-brand-300">
-                  {it.name.replace("سُورَةُ ", "")}
+                  {it.name.replace("سُورَةُ", " ")}
                 </span>
               </div>
             </Link>
           );
         }
         return (
-          <Link key={`a${it.surah}:${it.ayah}`} href={`/quran/${it.surah}#ayah-${it.ayah}`} className={card}>
+          <Link
+            key={`a${it.surah}:${it.ayah}`}
+            href={`/quran/${it.surah}#ayah-${it.ayah}`}
+            className={card}
+          >
             <p className={label}>
               {it.surahName} · {it.surah}:{it.ayah}
             </p>
@@ -116,18 +136,16 @@ export function HadithGroup({ data, terms, limit, moreHref }) {
   return (
     <Group
       icon={BookText}
-      title="Hadith / হাদিস"
+      title="Hadith"
       count={data.total}
       limit={limit}
       moreHref={moreHref}
-      note="Searches book and chapter names (English). Full-text hadith search will come later. / গ্রন্থ ও অধ্যায়ের (ইংরেজি) নামে খোঁজা হয়। হাদিসের পুরো লেখায় সার্চ পরে আসবে।"
     >
       {data.items.slice(0, limit).map((h) => (
         <Link key={h.href} href={h.href} className={card}>
           <p className="font-semibold">
             <Highlight text={h.title} terms={terms} />
           </p>
-          <p className="text-xs text-muted">{h.sub}</p>
         </Link>
       ))}
     </Group>
@@ -144,11 +162,16 @@ export function DuaGroup({ data, terms, limit, moreHref }) {
   ].slice(0, limit);
 
   return (
-    <Group icon={HandHeart} title="Dua / দুয়া" count={total} limit={limit} moreHref={moreHref}>
+    <Group
+      icon={HandHeart}
+      title="Dua "
+      count={total}
+      limit={limit}
+      moreHref={moreHref}
+    >
       {items.map((it) =>
         it.k === "section" ? (
           <Link key={it.href} href={it.href} className={card}>
-            <p className={label}>{it.kind}</p>
             <p className="font-semibold">
               <Highlight text={it.title} terms={terms} />
             </p>
@@ -158,13 +181,8 @@ export function DuaGroup({ data, terms, limit, moreHref }) {
           <Link key={`d${it.id}`} href={it.href} className={card}>
             <p className="font-semibold">
               <Highlight text={it.title} terms={terms} />
-              {it.audio && <span className="ml-2 text-xs">🔊</span>}
             </p>
-            {it.titleEn && (
-              <p className="text-xs text-muted">
-                <Highlight text={it.titleEn} terms={terms} />
-              </p>
-            )}
+
             {it.snippet && (
               <p className="mt-2 text-sm text-foreground/75">
                 <Highlight text={it.snippet} terms={terms} />
@@ -172,7 +190,7 @@ export function DuaGroup({ data, terms, limit, moreHref }) {
             )}
             {it.ref && <p className="mt-2 text-[11px] text-muted">{it.ref}</p>}
           </Link>
-        )
+        ),
       )}
     </Group>
   );
@@ -181,23 +199,30 @@ export function DuaGroup({ data, terms, limit, moreHref }) {
 export function ArticleGroup({ items, terms, limit, moreHref }) {
   if (!items.length) return null;
   return (
-    <Group icon={Newspaper} title="Articles / আর্টিকেল" count={items.length} limit={limit} moreHref={moreHref}>
+    <Group
+      icon={Newspaper}
+      title="Articles"
+      count={items.length}
+      limit={limit}
+      moreHref={moreHref}
+    >
       {items.slice(0, limit).map((a) => (
-        <Link key={a.slug} href={`/articles/${a.slug}`} className={`${card} flex gap-4`}>
-          <span
-            className={`grid h-16 w-16 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-3xl ${a.bg}`}
-          >
-            {a.icon}
-          </span>
+        <Link
+          key={a.slug}
+          href={`/articles/${a.slug}`}
+          className={`${card} flex gap-4`}
+        >
+          <Image
+            src={a.icon}
+            alt="Articles Logo"
+            width={68}
+            height={68}
+            className="rounded-xl object-cover"
+          />
+
           <span className="min-w-0">
-            <span className={label}>
-              {a.cat ? `${a.cat.en} · ${a.cat.bn}` : "Article"} · {fmtDate(a.date)}
-            </span>
-            <span className="block font-semibold">
+            <span className="block font-bold ">
               <Highlight text={a.title[0]} terms={terms} />
-            </span>
-            <span className="block text-xs text-muted">
-              <Highlight text={a.title[1]} terms={terms} />
             </span>
             <span className="mt-1.5 block text-sm text-foreground/75">
               <Highlight text={a.snippet} terms={terms} />
@@ -212,18 +237,20 @@ export function ArticleGroup({ items, terms, limit, moreHref }) {
 export function PageGroup({ items, limit, moreHref }) {
   if (!items.length) return null;
   return (
-    <Group icon={LayoutGrid} title="Pages & tools / পেজ ও টুল" count={items.length} limit={limit} moreHref={moreHref}>
+    <Group
+      icon={LayoutGrid}
+      title="Pages & tools"
+      count={items.length}
+      limit={limit}
+      moreHref={moreHref}
+    >
       {items.slice(0, limit).map((p) => (
         <Link key={p.href} href={p.href} className={card}>
           <p className="flex items-center justify-between font-semibold">
-            <span>
-              {p.en} <span className="font-normal text-muted">· {p.bn}</span>
-            </span>
+            <span>{p.en}</span>
             <ArrowRight size={16} />
           </p>
-          <p className="mt-1 text-xs text-muted">
-            {p.d[0]} / {p.d[1]}
-          </p>
+          <p className="mt-1 text-xs text-muted">{p.d[0]}</p>
         </Link>
       ))}
     </Group>

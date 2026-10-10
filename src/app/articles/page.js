@@ -12,16 +12,23 @@ export default async function ArticlesPage() {
 
   return (
     <div className="space-y-5">
-      <div className="rounded-2xl bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-6 text-white">
-        <h1 className="flex items-center gap-2 text-2xl font-bold">
-          <Newspaper /> Islamic Articles
-          <span className="text-lg font-medium text-brand-100">· ইসলামিক আর্টিকেল</span>
-        </h1>
-        <p className="mt-1 text-sm text-brand-100">
-          Read and learn about Islam
-          <span className="block opacity-75">পড়ুন এবং ইসলাম সম্পর্কে জানুন</span>
+
+       <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
+        <img
+            src="https://imglink.cc/cdn/EbF87lRR_m.jpg"
+            alt="Hajj Umrah Logo"
+            className="h-17 w-17 border-2 rounded-full bg-brand-700 object-cover"
+          />
+        <div className="">
+          
+          <p className="font-bold text-2xl">Islamic Articles</p>
+          <p className="mt-1 text-sm text-brand-100 flex items-center gap-2">
+            Read and learn about Islam
         </p>
+        </div>
+        
       </div>
+      
 
       <ArticleBrowser articles={articles} categories={categories} />
     </div>

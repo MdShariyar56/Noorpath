@@ -34,7 +34,12 @@ function Bi({ en, bn }) {
 
 function Dial({ rotation, bearing, aligned }) {
   return (
-    <svg viewBox="0 0 300 300" className="w-full" role="img" aria-label="Qibla compass">
+    <svg
+      viewBox="0 0 300 300"
+      className="w-full"
+      role="img"
+      aria-label="Qibla compass"
+    >
       {/* Rotating dial */}
       <g transform={`rotate(${rotation} 150 150)`}>
         <circle cx="150" cy="150" r="130" className="fill-card" />
@@ -110,9 +115,16 @@ function Dial({ rotation, bearing, aligned }) {
       {/* Fixed pointer (front of the phone) */}
       <polygon
         points="150,4 141,18 159,18"
-        className={aligned ? "fill-emerald-500" : "fill-brand-600 dark:fill-brand-300"}
+        className={
+          aligned ? "fill-emerald-500" : "fill-brand-600 dark:fill-brand-300"
+        }
       />
-      <circle cx="150" cy="150" r="6" className="fill-brand-600 dark:fill-brand-300" />
+      <circle
+        cx="150"
+        cy="150"
+        r="6"
+        className="fill-brand-600 dark:fill-brand-300"
+      />
     </svg>
   );
 }
@@ -155,7 +167,7 @@ export default function QiblaFinder() {
         setGeo("idle");
       },
       (err) => setGeo(err.code === 1 ? "denied" : "error"),
-      { timeout: 10000 }
+      { timeout: 10000 },
     );
   };
 
@@ -191,17 +203,18 @@ export default function QiblaFinder() {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-6 text-white">
-        <h1 className="flex items-center gap-2 text-2xl font-bold">
-          <Compass /> Qibla Finder
-          <span className="text-lg font-medium text-brand-100">· কিবলা ফাইন্ডার</span>
-        </h1>
-        <p className="mt-1 text-sm text-brand-100">
-          <Bi
-            en="Find the direction of the Kaaba from where you are"
-            bn="আপনি যেখানে আছেন সেখান থেকে কাবার দিক খুঁজে নিন"
-          />
-        </p>
+      <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
+        <img
+          src="https://imglink.cc/cdn/OboTUzdWPV.png"
+          alt="Qibla Logo"
+          className="h-17 w-17 rounded-full border-2 object-cover"
+        />
+        <div className="">
+          <p className="font-bold text-2xl">Qibla Finder</p>
+          <p className="mt-1 text-sm text-brand-100 flex items-center gap-2">
+            Find the direction of the Kaaba from where you are
+          </p>
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
@@ -220,7 +233,6 @@ export default function QiblaFinder() {
               <p className="font-semibold text-emerald-600 dark:text-emerald-400">
                 <Bi
                   en="✓ You are facing the Qibla"
-                  bn="✓ আপনি কিবলার দিকে মুখ করে আছেন"
                 />
               </p>
             )}
@@ -228,7 +240,6 @@ export default function QiblaFinder() {
               <p className="font-medium">
                 <Bi
                   en={`Turn ${Math.round(Math.abs(diff))}° ${diff > 0 ? "right" : "left"}`}
-                  bn={`${Math.round(Math.abs(diff))}° ${diff > 0 ? "ডানে" : "বামে"} ঘুরুন`}
                 />
               </p>
             )}
@@ -237,14 +248,13 @@ export default function QiblaFinder() {
                 onClick={start}
                 className="inline-flex items-center gap-2 rounded-full bg-brand-600 px-5 py-2 text-sm font-medium text-white hover:bg-brand-700"
               >
-                <Navigation size={16} /> Enable compass / কম্পাস চালু করুন
+                <Navigation size={16} /> Enable compass
               </button>
             )}
             {status === "denied" && (
               <p className="mt-2 text-sm text-red-500">
                 <Bi
                   en="Compass permission was denied. Allow it and try again."
-                  bn="কম্পাসের অনুমতি পাওয়া যায়নি। অনুমতি দিয়ে আবার চেষ্টা করুন।"
                 />
               </p>
             )}
@@ -252,7 +262,6 @@ export default function QiblaFinder() {
               <p className="mx-auto max-w-sm text-sm text-muted">
                 <Bi
                   en="No compass sensor was found on this device or browser (desktops usually don't have one). The dial is fixed with North (N) at the top, and the 🕋 marks the Qibla direction."
-                  bn="এই ডিভাইসে বা ব্রাউজারে কম্পাস সেন্সর পাওয়া যায়নি (ডেস্কটপে সাধারণত থাকে না)। ডায়ালে উত্তর (N) উপরে ধরা আছে, 🕋 চিহ্ন যেদিকে সেটাই কিবলা।"
                 />
               </p>
             )}
@@ -262,21 +271,21 @@ export default function QiblaFinder() {
         {/* Info */}
         <div className="space-y-3">
           <div className="rounded-2xl border border-border bg-card p-4">
-            <p className="text-xs text-muted">Qibla direction / কিবলার দিক</p>
+            <p className="text-xs text-muted">Qibla direction</p>
             <p className="mt-1 text-3xl font-bold text-brand-600 dark:text-brand-300">
               {bearing.toFixed(1)}°
             </p>
             <p className="text-sm text-muted">
-              {cardinal(bearing)} · {CARDINAL_BN[cardIndex]}
+              {cardinal(bearing)}
             </p>
             <p className="text-[11px] text-muted">
-              Measured from true north / সত্য উত্তর থেকে মাপা
+              Measured from true north
             </p>
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-4">
             <p className="text-xs text-muted">
-              Distance to the Kaaba / কাবা পর্যন্ত দূরত্ব
+              Distance to the Kaaba
             </p>
             <p className="mt-1 text-xl font-bold">
               {Math.round(distance).toLocaleString("en-US")} km
@@ -285,7 +294,7 @@ export default function QiblaFinder() {
 
           <div className="rounded-2xl border border-border bg-card p-4">
             <p className="flex items-center gap-1 text-xs text-muted">
-              <MapPin size={13} /> Location / অবস্থান
+              <MapPin size={13} /> Location
             </p>
             <p className="mt-1 font-semibold">{place.name}</p>
             <p className="text-xs text-muted">
@@ -298,8 +307,8 @@ export default function QiblaFinder() {
             >
               <Crosshair size={15} />
               {geo === "loading"
-                ? "Locating... / খুঁজছি..."
-                : "Use my location / আমার অবস্থান ব্যবহার করুন"}
+                ? "Locating..."
+                : "Use my location"}
             </button>
             {geoMsg && (
               <p className="mt-2 text-xs text-red-500">
@@ -310,7 +319,9 @@ export default function QiblaFinder() {
 
           {active && (
             <div className="rounded-2xl border border-border bg-card p-4">
-              <p className="text-xs text-muted">Your heading / আপনার মুখের দিক</p>
+              <p className="text-xs text-muted">
+                Your heading
+              </p>
               <p className="mt-1 text-xl font-bold tabular-nums">
                 {Math.round(heading)}°
               </p>
@@ -320,11 +331,19 @@ export default function QiblaFinder() {
       </div>
 
       <div className="rounded-2xl border border-border bg-card p-4 text-sm text-foreground/80">
-        <p className="mb-2 font-semibold">For best results / সঠিক ফল পেতে</p>
+        <p className="mb-2 font-semibold">For best results</p>
         <ul className="list-disc space-y-2 pl-5">
           {tips.map((t) => (
             <li key={t.en}>
-              <Bi en={t.en} bn={t.bn} />
+              <Bi en={t.en}  />
+            </li>
+          ))}
+        </ul>
+        <p className="my-2 font-semibold">সর্বোত্তম ফলাফলের জন্য</p>
+        <ul className="list-disc space-y-2 pl-5">
+          {tips.map((t) => (
+            <li key={t.en}>
+              <Bi bn={t.bn} />
             </li>
           ))}
         </ul>

@@ -2,7 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Check, ChevronDown, Landmark, RotateCcw } from "lucide-react";
-import { DAY, HIJRI_SUPPORTED, fmtFull, nextMonthOf, todayMs } from "@/lib/hijri";
+import {
+  DAY,
+  HIJRI_SUPPORTED,
+  fmtFull,
+  nextMonthOf,
+  todayMs,
+} from "@/lib/hijri";
 import {
   CHECKLIST,
   DUAS,
@@ -37,7 +43,9 @@ function Bi({ t }) {
 
 function Card({ title, children, className = "" }) {
   return (
-    <section className={`rounded-2xl border border-border bg-card p-5 ${className}`}>
+    <section
+      className={`rounded-2xl border border-border bg-card p-5 ${className}`}
+    >
       {title && <h2 className="mb-3 font-bold">{title}</h2>}
       {children}
     </section>
@@ -64,7 +72,10 @@ function Steps({ steps }) {
     <ol className="space-y-3">
       {steps.map((s, i) => (
         <li key={s.id}>
-          <details open className="group rounded-2xl border border-border bg-card p-4">
+          <details
+            open
+            className="group rounded-2xl border border-border bg-card p-4"
+          >
             <summary className="flex cursor-pointer list-none items-center gap-3 [&::-webkit-details-marker]:hidden">
               <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand-600 text-sm font-bold text-white">
                 {i + 1}
@@ -129,7 +140,9 @@ export default function HajjUmrahGuide() {
     } catch {}
   };
   const toggle = (id) =>
-    save(checked.includes(id) ? checked.filter((x) => x !== id) : [...checked, id]);
+    save(
+      checked.includes(id) ? checked.filter((x) => x !== id) : [...checked, id],
+    );
 
   const tabClass = (active) =>
     `shrink-0 rounded-full border px-4 py-2 text-center text-sm font-medium leading-tight transition ${
@@ -140,19 +153,18 @@ export default function HajjUmrahGuide() {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-6 text-white">
-        <h1 className="flex items-center gap-2 text-2xl font-bold">
-          <Landmark /> Hajj &amp; Umrah Guide
-          <span className="text-lg font-medium text-brand-100">· হজ ও উমরা গাইড</span>
-        </h1>
-        <p className="mt-1 text-sm text-brand-100">
-          <Bi
-            t={[
-              "A step-by-step guide for your spiritual journey",
-              "আপনার আধ্যাত্মিক সফরের ধাপে ধাপে গাইড",
-            ]}
-          />
-        </p>
+      <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
+        <img
+          src="https://imglink.cc/cdn/utNUdJza6Q.png"
+          alt="Hajj Umrah Logo"
+          className="h-17 w-17 border-1 rounded-full  object-cover"
+        />
+        <div className="">
+          <p className="font-bold text-2xl">Hajj &amp; Umrah Guide</p>
+          <p className="mt-1 text-sm text-brand-100 flex items-center gap-2">
+            A step-by-step guide for your spiritual journey
+          </p>
+        </div>
       </div>
 
       <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
@@ -164,7 +176,6 @@ export default function HajjUmrahGuide() {
             className={tabClass(tab === t.id)}
           >
             {t.en}
-            <span className="block text-[11px] opacity-80">{t.bn}</span>
           </button>
         ))}
       </div>
@@ -180,16 +191,10 @@ export default function HajjUmrahGuide() {
               {hajj.underway ? (
                 <p className="mt-1 text-2xl font-bold text-gold-400">
                   Hajj is underway
-                  <span className="ml-2 text-base font-medium text-brand-100">
-                    / হজ চলছে
-                  </span>
                 </p>
               ) : (
                 <p className="mt-1 text-2xl font-bold text-gold-400">
                   Expected in {hajj.daysTo} days
-                  <span className="ml-2 text-base font-medium text-brand-100">
-                    / আনুমানিক আর {hajj.daysTo} দিন
-                  </span>
                 </p>
               )}
               <p className="mt-2 text-sm text-brand-100">
@@ -201,23 +206,22 @@ export default function HajjUmrahGuide() {
                 <Bi
                   t={[
                     "Estimated from the Umm al-Qura calendar. The actual dates follow Saudi Arabia's moon-sighting announcement. Eid in Bangladesh may fall a day later.",
-                    "উম্মুল কুরা ক্যালেন্ডার থেকে আনুমানিক হিসাব। প্রকৃত তারিখ সৌদি আরবের চাঁদ দেখার ঘোষণা অনুযায়ী হবে। বাংলাদেশে ঈদ একদিন পরে হতে পারে।",
                   ]}
                 />
               </p>
             </div>
           )}
 
-          <Card title="Overview / সংক্ষেপে">
+          <Card title="Overview">
             <Bullets items={HAJJ_INFO} />
           </Card>
 
-          <Card title="Types of Hajj / হজের ধরন">
+          <Card title="Types of Hajj ">
             <div className="grid gap-3 md:grid-cols-3">
               {HAJJ_TYPES.map((t) => (
                 <div key={t.name[0]} className="rounded-xl bg-background p-4">
                   <p className="font-semibold text-brand-600 dark:text-brand-300">
-                    {t.name[0]} · {t.name[1]}
+                    {t.name[0]}
                   </p>
                   <p className="mt-2 text-sm">
                     <Bi t={t.text} />
@@ -228,7 +232,7 @@ export default function HajjUmrahGuide() {
           </Card>
 
           <div>
-            <h2 className="mb-3 font-bold">Steps of Hajj / হজের ধাপসমূহ</h2>
+            <h2 className="mb-3 font-bold">Steps of Hajj </h2>
             <Steps steps={HAJJ_STEPS} />
           </div>
         </div>
@@ -237,11 +241,11 @@ export default function HajjUmrahGuide() {
       {/* উমরা */}
       {tab === "umrah" && (
         <div className="space-y-6">
-          <Card title="Overview / সংক্ষেপে">
+          <Card title="Overview ">
             <Bullets items={UMRAH_INFO} />
           </Card>
           <div>
-            <h2 className="mb-3 font-bold">Steps of Umrah / উমরার ধাপসমূহ</h2>
+            <h2 className="mb-3 font-bold">Steps of Umrah </h2>
             <Steps steps={UMRAH_STEPS} />
           </div>
         </div>
@@ -251,11 +255,17 @@ export default function HajjUmrahGuide() {
       {tab === "duas" && (
         <div className="grid gap-4 xl:grid-cols-2">
           {DUAS.map((d) => (
-            <article key={d.id} className="rounded-2xl border border-border bg-card p-5">
-              <h2 className="font-semibold">
+            <article
+              key={d.id}
+              className="rounded-2xl border border-border bg-card p-5"
+            >
+              <h2 className="font-bold">
                 <Bi t={d.title} />
               </h2>
-              <p dir="rtl" className="font-arabic mt-4 text-right text-2xl leading-[2.2] sm:text-3xl">
+              <p
+                dir="rtl"
+                className="font-arabic mt-4 text-right text-2xl leading-[2.2] sm:text-3xl"
+              >
                 {d.arabic}
               </p>
               <p className="mt-3 text-sm italic text-brand-600 dark:text-brand-300">
@@ -278,15 +288,17 @@ export default function HajjUmrahGuide() {
               <div>
                 <p className="text-2xl font-bold text-brand-600 dark:text-brand-300">
                   {checked.length}{" "}
-                  <span className="text-base font-medium text-muted">/ {TOTAL_ITEMS}</span>
+                  <span className="text-base font-medium text-muted">
+                    / {TOTAL_ITEMS}
+                  </span>
                 </p>
-                <p className="text-xs text-muted">Packed / প্রস্তুত</p>
+                <p className="text-xs text-muted">Packed</p>
               </div>
               <button
                 onClick={() => save([])}
                 className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-1.5 text-sm font-medium hover:border-brand-300"
               >
-                <RotateCcw size={14} /> Reset / রিসেট
+                <RotateCcw size={14} /> Reset 
               </button>
             </div>
             <div className="mt-3 h-2 overflow-hidden rounded-full bg-brand-50 dark:bg-brand-800">
@@ -297,17 +309,14 @@ export default function HajjUmrahGuide() {
             </div>
             <p className="mt-2 text-[11px] text-muted">
               <Bi
-                t={[
-                  "Saved on this device only.",
-                  "শুধু এই ডিভাইসে সেভ থাকে।",
-                ]}
+                t={["Saved on this device only."]}
               />
             </p>
           </Card>
 
           <div className="grid gap-4 md:grid-cols-2">
             {CHECKLIST.map((g) => (
-              <Card key={g.id} title={`${g.title[0]} / ${g.title[1]}`}>
+              <Card key={g.id} title={`${g.title[0]}`}>
                 <ul className="space-y-2">
                   {g.items.map((it) => {
                     const done = checked.includes(it.id);
@@ -327,7 +336,9 @@ export default function HajjUmrahGuide() {
                           >
                             {done && <Check size={14} />}
                           </span>
-                          <span className={done ? "line-through opacity-60" : ""}>
+                          <span
+                            className={done ? "line-through opacity-60" : ""}
+                          >
                             <Bi t={it.text} />
                           </span>
                         </button>
@@ -344,22 +355,21 @@ export default function HajjUmrahGuide() {
       {/* স্বাস্থ্য ও ভ্রমণ */}
       {tab === "tips" && (
         <div className="grid gap-4 lg:grid-cols-2">
-          <Card title="Health & safety / স্বাস্থ্য ও নিরাপত্তা">
+          <Card title="Health & safety ">
             <Bullets items={HEALTH_TIPS} />
           </Card>
-          <Card title="Travel tips / ভ্রমণের পরামর্শ">
+          <Card title="Travel tips">
             <Bullets items={TRAVEL_TIPS} />
           </Card>
         </div>
       )}
 
       <div className="rounded-2xl border border-border bg-card p-4 text-sm text-foreground/80">
-        <p className="mb-1 font-semibold">Please note / জেনে রাখুন</p>
+        <p className="mb-1 font-semibold">Please note</p>
         <p>
           <Bi
             t={[
               "This guide is a general summary to help you prepare. Rulings can differ between schools of thought and individual circumstances. Please follow the guidance of a qualified scholar or your Hajj group's scholar, and check official sources for current regulations.",
-              "এই গাইড আপনার প্রস্তুতির জন্য একটা সাধারণ সারসংক্ষেপ। মাযহাব ও ব্যক্তিগত অবস্থাভেদে বিধান আলাদা হতে পারে। অনুগ্রহ করে যোগ্য আলেম বা আপনার হজ দলের আলেমের নির্দেশনা অনুসরণ করুন এবং বর্তমান নিয়মের জন্য সরকারি উৎস দেখুন।",
             ]}
           />
         </p>

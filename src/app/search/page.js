@@ -11,12 +11,12 @@ import {
 } from "@/components/search/ResultGroups";
 
 const TABS = [
-  { id: "all", en: "All", bn: "সব" },
-  { id: "quran", en: "Quran", bn: "কুরআন" },
-  { id: "hadith", en: "Hadith", bn: "হাদিস" },
-  { id: "dua", en: "Dua", bn: "দুয়া" },
-  { id: "articles", en: "Articles", bn: "আর্টিকেল" },
-  { id: "pages", en: "Pages", bn: "পেজ" },
+  { id: "all", en: "All" },
+  { id: "quran", en: "Quran"},
+  { id: "hadith", en: "Hadith"},
+  { id: "dua", en: "Dua"},
+  { id: "articles", en: "Articles"},
+  { id: "pages", en: "Pages"},
 ];
 
 const SUGGESTIONS = ["mercy", "patience", "2:255", "zakat", "রমজান", "travel"];
@@ -45,14 +45,28 @@ export default async function SearchPage({ searchParams }) {
 
   return (
     <div className="space-y-6">
+
+     <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
+        <img
+          src="https://imglink.cc/cdn/4S5aW5WvIB.jpg"
+          alt="Search Logo"
+          className="h-17 w-17 border-2 rounded-full  object-cover"
+        />
+        <div className="">
+          <p className="font-bold text-2xl">Search all iteams</p>
+          <p className="mt-1 text-sm text-brand-100 flex items-center gap-2">
+          Quran, Hadith, Dua, Articles and more
+          </p>
+          
+        </div>
+      </div>
+
       <div className="rounded-2xl bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-6 text-white">
         <h1 className="flex items-center gap-2 text-2xl font-bold">
           <Search /> Search
-          <span className="text-lg font-medium text-brand-100">· সার্চ</span>
         </h1>
         <p className="mt-1 text-sm text-brand-100">
           Quran, Hadith, Dua, Articles and more
-          <span className="block opacity-75">কুরআন, হাদিস, দুয়া, আর্টিকেল ও আরও অনেক কিছু</span>
         </p>
 
         <Form
@@ -81,7 +95,7 @@ export default async function SearchPage({ searchParams }) {
 
       {!q && (
         <div className="rounded-2xl border border-border bg-card p-5">
-          <p className="mb-3 text-sm font-semibold">Try searching for / এগুলো খুঁজে দেখুন</p>
+          <p className="mb-3 text-sm font-semibold">Try searching for</p>
           <div className="flex flex-wrap gap-2">
             {SUGGESTIONS.map((s) => (
               <Link
@@ -94,22 +108,21 @@ export default async function SearchPage({ searchParams }) {
             ))}
           </div>
           <p className="mt-4 text-xs text-muted">
-            Tip: type a verse reference like 2:255 to jump straight to it. / টিপ: 2:255 এর
-            মতো আয়াতের রেফারেন্স লিখলে সরাসরি ওই আয়াতে যাওয়া যাবে।
+            Tip: type a verse reference like 2:255 to jump straight to it. 
           </p>
         </div>
       )}
 
       {q && !ready && (
         <p className="rounded-2xl border border-border bg-card p-5 text-sm text-muted">
-          Type at least 2 characters. / কমপক্ষে ২টি অক্ষর লিখুন।
+          Type at least 2 characters.
         </p>
       )}
 
       {r && (
         <>
           <p className="text-sm text-muted">
-            {r.counts.all} results for / এর জন্য ফলাফল:{" "}
+            {r.counts.all} results for :{" "}
             <span className="font-semibold text-foreground">&ldquo;{q}&rdquo;</span>
           </p>
 
@@ -128,7 +141,6 @@ export default async function SearchPage({ searchParams }) {
                   }`}
                 >
                   {tab.en} ({r.counts[tab.id]})
-                  <span className="block text-[11px] opacity-80">{tab.bn}</span>
                 </Link>
               );
             })}
@@ -136,9 +148,9 @@ export default async function SearchPage({ searchParams }) {
 
           {r.counts.all === 0 && !r.quran.failed && (
             <div className="rounded-2xl border border-border bg-card p-6 text-center">
-              <p className="font-semibold">No results found. / কোনো ফলাফল পাওয়া যায়নি।</p>
+              <p className="font-semibold">No results found.</p>
               <p className="mt-1 text-sm text-muted">
-                Try a different spelling or fewer words. / অন্য বানানে বা কম শব্দে খুঁজে দেখুন।
+                Try a different spelling or fewer words.
               </p>
             </div>
           )}

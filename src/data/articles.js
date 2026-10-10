@@ -12,7 +12,7 @@ export const ARTICLES = [
     slug: "importance-of-salah",
     cat: "salah",
     date: "2026-09-30",
-    icon: "🕌",
+    icon: "https://imglink.cc/cdn/M3HheGlWbZ.jpg",
     bg: "from-brand-800 to-brand-500",
     title: ["The Importance of Salah in Islam", "ইসলামে সালাতের গুরুত্ব"],
     excerpt: [
@@ -47,7 +47,7 @@ export const ARTICLES = [
     slug: "ramadan-month-of-blessings",
     cat: "ramadan",
     date: "2026-09-27",
-    icon: "🌙",
+    icon: "https://imglink.cc/cdn/VUZA1RW5uD.jpg",
     bg: "from-indigo-900 to-amber-600",
     title: ["Ramadan: A Month of Blessings", "রমজান: বরকতের মাস"],
     excerpt: [
@@ -82,7 +82,7 @@ export const ARTICLES = [
     slug: "understanding-zakat",
     cat: "zakat",
     date: "2026-09-24",
-    icon: "🪙",
+    icon: "https://imglink.cc/cdn/l9s_c3AWNG.jpg",
     bg: "from-emerald-900 to-amber-500",
     title: ["Understanding Zakat: Purifying Your Wealth", "জাকাত বোঝা: সম্পদ পবিত্র করার পথ"],
     excerpt: [
@@ -117,7 +117,7 @@ export const ARTICLES = [
     slug: "hajj-journey-of-faith",
     cat: "hajj",
     date: "2026-09-20",
-    icon: "🕋",
+    icon: "https://imglink.cc/cdn/pRIS1QFQzL.jpg",
     bg: "from-slate-800 to-sky-500",
     title: ["Hajj: The Journey of Faith", "হজ: ঈমানের সফর"],
     excerpt: [
@@ -152,7 +152,7 @@ export const ARTICLES = [
     slug: "life-of-prophet-muhammad",
     cat: "seerah",
     date: "2026-09-15",
-    icon: "📚",
+    icon: "https://imglink.cc/cdn/8gdTFNY0ek.jpg",
     bg: "from-teal-900 to-amber-500",
     title: ["The Life of Prophet Muhammad ﷺ", "নবী মুহাম্মদ ﷺ এর জীবনী"],
     excerpt: [
@@ -186,7 +186,7 @@ export const ARTICLES = [
     slug: "good-manners-in-islam",
     cat: "manners",
     date: "2026-09-10",
-    icon: "🤝",
+    icon: "https://imglink.cc/cdn/CWu7_f0fd6.png",
     bg: "from-cyan-900 to-brand-500",
     title: ["Good Manners (Akhlaq) in Islam", "ইসলামে উত্তম চরিত্র (আখলাক)"],
     excerpt: [

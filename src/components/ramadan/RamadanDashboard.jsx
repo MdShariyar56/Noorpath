@@ -182,87 +182,61 @@ export default function RamadanDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* হিরো */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-6 text-white md:p-8">
-        <div className="pointer-events-none absolute -right-10 -top-10 h-56 w-56 rounded-full bg-gold-400/20 blur-3xl" />
-        <div className="relative">
-          <h1 className="flex items-center gap-2 text-2xl font-bold">
-            <Moon /> Ramadan {info.year} AH
-            <span className="text-lg font-medium text-brand-100">· রমজান {info.year} হিজরি</span>
-          </h1>
-
-          {info.inRamadan ? (
+       <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
+               <img
+                   src="https://imglink.cc/cdn/wZV86kKY6c.webp"
+                   alt="Prayer Times Logo"
+                   className="h-17 w-17 rounded-full border-2 object-cover"
+                 />
+               <div className="">
+                 
+                 <p className="font-bold text-2xl">Ramadan {info.year} Hijri</p>
+                 {info.inRamadan ? (
             <>
-              <p className="mt-3 text-3xl font-bold text-gold-400">
+              <p className=" text-3xl font-bold text-gold-400">
                 Day {info.day} of {info.length}
-                <span className="ml-2 text-lg font-medium text-brand-100">
-                  / {info.length} দিনের {info.day}তম দিন
-                </span>
+                
               </p>
-              <div className="mt-3 max-w-xl">
+              <div className=" max-w-xl">
                 <Bar value={info.day / info.length} light />
               </div>
               <p className="mt-2 text-sm text-brand-100">
                 <Bi
                   en={`${info.length - info.day} days left`}
-                  bn={`আর ${info.length - info.day} দিন বাকি`}
                 />
               </p>
             </>
           ) : (
             <>
-              <p className="mt-3 text-3xl font-bold text-gold-400">
+              <p className=" text-3xl font-bold text-gold-400">
                 {info.daysTo === 1 ? (
                   "Ramadan begins tomorrow"
                 ) : (
                   <>Ramadan begins in {info.daysTo} days</>
                 )}
               </p>
-              <p className="text-brand-100">
-                {info.daysTo === 1
-                  ? "রমজান শুরু আগামীকাল"
-                  : `রমজান শুরু হতে আর ${info.daysTo} দিন বাকি`}
-              </p>
-              <p className="mt-2 text-sm text-brand-100">
+              
+              <p className=" text-sm text-brand-100">
                 <Bi
                   en={`Expected around ${fmtFull(info.startMs)}, subject to moon sighting.`}
-                  bn={`আনুমানিক ${fmtFull(info.startMs)}, চাঁদ দেখার ওপর নির্ভরশীল।`}
                 />
               </p>
             </>
           )}
+               </div>
+               
+             </div>
 
-          <div className="mt-4">
-            {info.preview ? (
-              <button
-                onClick={() => setPreview(false)}
-                className="rounded-full bg-white/15 px-4 py-1.5 text-sm font-medium hover:bg-white/25"
-              >
-                Preview: Day 15 · Exit preview / প্রিভিউ বন্ধ করুন
-              </button>
-            ) : (
-              !info.inRamadan && (
-                <button
-                  onClick={() => setPreview(true)}
-                  className="rounded-full bg-white/15 px-4 py-1.5 text-sm font-medium hover:bg-white/25"
-                >
-                  Preview Ramadan mode / রমজান মোড প্রিভিউ
-                </button>
-              )
-            )}
-          </div>
-        </div>
-      </div>
+      
 
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
         {/* বাম কলাম */}
         <div className="space-y-6">
-          <Card title="Today's fasting times / আজকের রোজার সময়">
+          <Card title="Today's fasting times">
             {error && (
               <p className="text-sm text-red-500">
                 <Bi
                   en="Could not load prayer times. Please check your connection and refresh."
-                  bn="নামাজের সময় আনা যায়নি। ইন্টারনেট দেখে পেজ রিফ্রেশ করুন।"
                 />
               </p>
             )}
@@ -274,7 +248,7 @@ export default function RamadanDashboard() {
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div className="rounded-xl bg-background p-4">
                     <p className="text-xs text-muted">
-                      <Bi en="Suhoor ends (Fajr)" bn="সেহরি শেষ (ফজর)" />
+                      <Bi en="Suhoor ends (Fajr)" />
                     </p>
                     <p className="mt-1 text-2xl font-bold tabular-nums">
                       {format12h(data.timings.Fajr)}
@@ -282,7 +256,7 @@ export default function RamadanDashboard() {
                   </div>
                   <div className="rounded-xl bg-background p-4">
                     <p className="text-xs text-muted">
-                      <Bi en="Iftar (Maghrib)" bn="ইফতার (মাগরিব)" />
+                      <Bi en="Iftar (Maghrib)"/>
                     </p>
                     <p className="mt-1 text-2xl font-bold tabular-nums">
                       {format12h(data.timings.Maghrib)}
@@ -292,11 +266,11 @@ export default function RamadanDashboard() {
 
                 <div className="mt-4 rounded-xl bg-brand-50 p-4 dark:bg-brand-800/50">
                   <p className="font-semibold text-brand-700 dark:text-brand-200">
-                    <Bi en={phase.status.en} bn={phase.status.bn} />
+                    <Bi en={phase.status.en} />
                   </p>
                   <div className="mt-2 flex items-end justify-between gap-3">
                     <span className="text-xs text-muted">
-                      <Bi en={phase.label.en} bn={phase.label.bn} />
+                      <Bi en={phase.label.en}  />
                     </span>
                     <span className="text-2xl font-bold tabular-nums">
                       {formatCountdown(phase.remaining)}
@@ -312,56 +286,16 @@ export default function RamadanDashboard() {
                     en={`Times for ${data.location}, calculated by the same method as the Prayer Times page. Local mosque or Islamic Foundation timetables may differ by a minute or two.${
                       info.inRamadan ? "" : " Outside Ramadan, this is useful for voluntary fasts."
                     }`}
-                    bn={`${data.location} এর সময়, নামাজের সময় পেজের একই পদ্ধতিতে হিসাব করা। স্থানীয় মসজিদ বা ইসলামিক ফাউন্ডেশনের সময়সূচির সাথে এক-দুই মিনিটের তফাত হতে পারে।${
-                      info.inRamadan ? "" : " রমজানের বাইরে নফল রোজার জন্য এটা কাজে লাগবে।"
-                    }`}
+                    
                   />
                 </p>
               </>
             )}
           </Card>
 
-          <Card title="Fasting tracker / রোজা ট্র্যাকার">
-            <p className="mb-3 text-sm text-muted">
-              <Bi
-                en={`Fasted: ${fasts.filter((d) => d <= info.length).length} of ${info.length} days`}
-                bn={`রোজা রেখেছেন: ${info.length} দিনের মধ্যে ${fasts.filter((d) => d <= info.length).length} দিন`}
-              />
-            </p>
-            <div className="grid grid-cols-6 gap-2 sm:grid-cols-10">
-              {Array.from({ length: info.length }, (_, i) => i + 1).map((d) => {
-                const done = fasts.includes(d);
-                const future = d > info.day;
-                const isToday = d === info.day;
-                return (
-                  <button
-                    key={d}
-                    disabled={future}
-                    onClick={() => toggleFast(d)}
-                    aria-pressed={done}
-                    aria-label={`Day ${d}`}
-                    className={`grid aspect-square place-items-center rounded-xl border text-sm font-semibold transition ${
-                      done
-                        ? "border-brand-600 bg-brand-600 text-white"
-                        : "border-border bg-background hover:border-brand-300"
-                    } ${isToday ? "ring-2 ring-gold-400/60" : ""} ${
-                      future ? "cursor-not-allowed opacity-40" : ""
-                    }`}
-                  >
-                    {done ? <Check size={16} /> : d}
-                  </button>
-                );
-              })}
-            </div>
-            <p className="mt-3 text-[11px] text-muted">
-              <Bi
-                en="Saved on this device only. Tap a day to mark it."
-                bn="শুধু এই ডিভাইসে সেভ থাকে। দিন চেপে চিহ্নিত করুন।"
-              />
-            </p>
-          </Card>
+          
 
-          <Card title="Duas / দুয়া">
+          <Card title="Duas">
             <div className="space-y-5">
               {DUAS.map((d) => (
                 <article key={d.id} className="rounded-xl bg-background p-4">
@@ -385,14 +319,14 @@ export default function RamadanDashboard() {
               href="/dua/fasting"
               className="mt-4 inline-block text-sm font-semibold text-brand-600 dark:text-brand-300"
             >
-              More fasting duas / আরও রোজার দুয়া →
+              More fasting duas →
             </Link>
           </Card>
         </div>
 
         {/* ডান কলাম */}
         <div className="space-y-6">
-          <Card title="Quran progress / কুরআনের অগ্রগতি">
+          <Card title="Quran progress">
             <p className="text-3xl font-bold text-brand-600 dark:text-brand-300">
               {juz} <span className="text-base font-medium text-muted">/ 30 Juz</span>
             </p>
@@ -401,7 +335,7 @@ export default function RamadanDashboard() {
             </div>
             {juz >= 30 && (
               <p className="mt-2 text-sm font-medium text-emerald-600 dark:text-emerald-400">
-                <Bi en="You completed the Quran! Alhamdulillah." bn="আপনি কুরআন খতম করেছেন! আলহামদুলিল্লাহ।" />
+                <Bi en="You completed the Quran! Alhamdulillah." />
               </p>
             )}
             <div className="mt-4 flex items-center gap-2">
@@ -425,12 +359,12 @@ export default function RamadanDashboard() {
                 href="/quran"
                 className="ml-auto text-sm font-semibold text-brand-600 dark:text-brand-300"
               >
-                Continue reading / পড়তে থাকুন →
+                Continue reading  →
               </Link>
             </div>
           </Card>
 
-          <Card title="Today's goals / আজকের লক্ষ্য">
+          <Card title="Today's goals ">
             <p className="mb-3 text-sm text-muted">
               {goals.length} / {GOALS.length}
             </p>
@@ -457,7 +391,7 @@ export default function RamadanDashboard() {
                         {done && <Check size={14} />}
                       </span>
                       <span className={done ? "line-through opacity-60" : ""}>
-                        <Bi en={g.en} bn={g.bn} />
+                        <Bi en={g.en}  />
                       </span>
                     </button>
                   </li>
@@ -467,7 +401,6 @@ export default function RamadanDashboard() {
             <p className="mt-3 text-[11px] text-muted">
               <Bi
                 en="Resets automatically every day. Saved on this device only."
-                bn="প্রতিদিন নিজে থেকে নতুন হয়। শুধু এই ডিভাইসে সেভ থাকে।"
               />
             </p>
           </Card>

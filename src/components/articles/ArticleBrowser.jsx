@@ -40,7 +40,7 @@ export default function ArticleBrowser({ articles, categories }) {
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Search articles / আর্টিকেল খুঁজুন..."
+            placeholder="Search articles"
             className="w-full bg-transparent text-sm outline-none placeholder:text-muted"
           />
         </div>
@@ -50,14 +50,14 @@ export default function ArticleBrowser({ articles, categories }) {
           aria-label="Sort articles"
           className="rounded-xl border border-border bg-card px-4 py-3 text-sm outline-none"
         >
-          <option value="new">Latest / সর্বশেষ</option>
-          <option value="old">Oldest / পুরনো</option>
+          <option value="new">Latest</option>
+          <option value="old">Oldest</option>
         </select>
       </div>
 
       <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
         <button onClick={() => setCat("all")} className={chip(cat === "all")}>
-          All / সব ({articles.length})
+          All Articles ({articles.length})
         </button>
         {categories.map((c) => (
           <button
@@ -66,14 +66,13 @@ export default function ArticleBrowser({ articles, categories }) {
             className={chip(cat === c.id)}
           >
             {c.en}
-            <span className="block text-[11px] opacity-80">{c.bn}</span>
           </button>
         ))}
       </div>
 
       {list.length === 0 && (
         <p className="py-10 text-center text-muted">
-          No article found. / কোনো আর্টিকেল পাওয়া যায়নি।
+          No article found.
         </p>
       )}
 

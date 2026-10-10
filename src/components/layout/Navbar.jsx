@@ -6,6 +6,7 @@ import { Bell, ChevronDown, Menu, Search } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import Form from "next/form";
 import UserMenu from "./UserMenu";
+import BookmarksLink from "./BookmarksLink";
 
 const links = [
   { href: "/", label: "Home" },
@@ -19,7 +20,7 @@ const links = [
 
 export function Logo({ light = false }) {
   return (
-    <Link href="/" className="flex items-center gap-2">
+    <Link href="/" className="flex items-center gap-2 ">
       <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand-600 text-xl text-white">
         🕌
       </span>
@@ -44,7 +45,7 @@ export default function Navbar({ onMenuClick }) {
 
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-card/90 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-[1600px] items-center gap-4 px-4">
+      <div className="mx-auto flex h-16  items-center gap-4 px-4">
         <button
           onClick={onMenuClick}
           aria-label="Open menu"
@@ -97,7 +98,7 @@ export default function Navbar({ onMenuClick }) {
           </Form>
 
           <ThemeToggle />
-
+                      <BookmarksLink />
           <button
             aria-label="Notifications"
             className="relative grid h-10 w-10 place-items-center rounded-full hover:bg-brand-50 dark:hover:bg-brand-800"

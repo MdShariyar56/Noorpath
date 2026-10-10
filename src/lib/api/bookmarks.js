@@ -23,14 +23,15 @@ async function request(method, path, body) {
 }
 
 // আমার বুকমার্কের তালিকা
-export async function listBookmarks(type = "quran") {
-  const data = await request("GET", `/me/bookmarks?type=${encodeURIComponent(type)}`);
+export async function listBookmarks(type) {
+  const q = type ? `?type=${encodeURIComponent(type)}` : "";
+  const data = await request("GET", `/me/bookmarks${q}`);
   return data.bookmarks ?? [];
 }
 
 // target এর উদাহরণ: "2:255" (সূরা:আয়াত)
-export const addBookmark = (type, target) =>
-  request("POST", "/me/bookmarks", { type, target });
+export const addBookmark = (type, target, label = "") =>
+  request("POST", "/me/bookmarks", { type, target, label });
 
 export const removeBookmark = (type, target) =>
   request(

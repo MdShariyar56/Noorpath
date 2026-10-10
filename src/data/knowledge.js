@@ -4,7 +4,7 @@ const S = (en, bn, extra = "") => ({ title: [`${en} (RA)`, `${bn} (রা.)`], .
 export const TOPICS = [
   {
     slug: "five-pillars",
-    icon: "🕌",
+    icon: "https://imglink.cc/cdn/z9d4D7eTu6.webp",
     bg: "from-brand-800 to-brand-500",
     title: ["The Five Pillars of Islam", "ইসলামের পাঁচ স্তম্ভ"],
     desc: [
@@ -72,7 +72,7 @@ export const TOPICS = [
 
   {
     slug: "articles-of-faith",
-    icon: "✨",
+    icon: "https://imglink.cc/cdn/I9q51_jD69.webp",
     bg: "from-indigo-900 to-brand-500",
     title: ["The Six Articles of Faith", "ঈমানের ছয় রুকন"],
     desc: [
@@ -139,7 +139,7 @@ export const TOPICS = [
 
   {
     slug: "prophets",
-    icon: "🕊️",
+    icon: "https://imglink.cc/cdn/TKuhgMKiPa.jpg",
     bg: "from-amber-900 to-brand-600",
     title: ["The Prophets in the Quran", "কুরআনে বর্ণিত নবীগণ"],
     desc: [
@@ -238,7 +238,7 @@ export const TOPICS = [
 
   {
     slug: "ten-promised-paradise",
-    icon: "🛡️",
+    icon: "https://imglink.cc/cdn/DQYzQejcRU.jpg",
     bg: "from-slate-800 to-brand-600",
     title: ["The Ten Given Glad Tidings of Paradise", "জান্নাতের সুসংবাদপ্রাপ্ত দশ সাহাবি"],
     desc: [
@@ -334,7 +334,7 @@ export const TOPICS = [
 
   {
     slug: "wudu-and-salah",
-    icon: "🧎",
+    icon: "https://imglink.cc/cdn/C3ePjC2MnR.jpg",
     bg: "from-cyan-900 to-brand-500",
     title: ["How to Perform Wudu and Salah", "অজু ও নামাজের নিয়ম"],
     desc: [
@@ -543,7 +543,7 @@ export const TOPICS = [
   {
     slug: "glossary",
     kind: "glossary",
-    icon: "📖",
+    icon: "https://imglink.cc/cdn/v1iF9sSd4S.jpg",
     bg: "from-emerald-900 to-amber-500",
     title: ["Islamic Terms Glossary", "ইসলামি পরিভাষা"],
     desc: [

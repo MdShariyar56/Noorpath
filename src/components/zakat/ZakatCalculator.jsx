@@ -31,7 +31,6 @@ function Bi({ en, bn }) {
   return (
     <>
       <span>{en}</span>
-      <span className="block text-[0.92em] opacity-75">{bn}</span>
     </>
   );
 }
@@ -40,7 +39,7 @@ function Section({ en, bn, children }) {
   return (
     <section className="rounded-2xl border border-border bg-card p-5">
       <h2 className="mb-4 font-bold">
-        {en} <span className="font-medium text-muted">/ {bn}</span>
+        {en}
       </h2>
       {children}
     </section>
@@ -71,7 +70,7 @@ function Field({ en, bn, hint, warn, value, onChange, prefix = "৳", suffix }) 
   return (
     <label className="block">
       <span className="text-sm font-medium">
-        {en} <span className="text-muted">/ {bn}</span>
+        {en}
       </span>
       <div className="mt-1.5 flex items-center rounded-xl border border-border bg-background px-3 focus-within:border-brand-500">
         {prefix && <span className="mr-2 text-sm text-muted">{prefix}</span>}
@@ -136,93 +135,89 @@ export default function ZakatCalculator() {
   const r = useMemo(() => calculateZakat(v, { unit, basis }), [v, unit, basis]);
 
   const u = unit === "bhori" ? "bhori" : "g";
-  const uLabel = unit === "bhori" ? "bhori / ভরি" : "gram / গ্রাম";
+  const uLabel = unit === "bhori" ? "bhori" : "gram";
   const nisabBhori = Number((r.nisabGrams / BHORI_G).toFixed(2));
   const basisEn = basis === "gold" ? "gold" : "silver";
-  const basisBn = basis === "gold" ? "সোনা" : "রূপা";
 
   const goldMissing = num(v.goldW) > 0 && num(v.goldP) === 0;
   const silverMissing = num(v.silverW) > 0 && num(v.silverP) === 0;
-  const missingMsg = "Enter the price to include this / যোগ করতে দাম দিন";
+  const missingMsg = "Enter the price to include this";
 
   let status;
   if (!r.priceKnown) {
     status = {
       tone: "bg-amber-400/20 text-amber-100",
       en: `Enter the ${basisEn} price to check the nisab`,
-      bn: `নিসাব যাচাই করতে ${basisBn}র দাম দিন`.replace("সোনার", "সোনার"),
     };
   } else if (r.due) {
     status = {
       tone: "bg-emerald-400/25 text-emerald-100",
       en: "Above nisab: zakat is due",
-      bn: "নিসাবের উপরে: জাকাত প্রযোজ্য",
     };
   } else {
     status = {
       tone: "bg-white/15 text-white",
       en: "Below nisab: no zakat due",
-      bn: "নিসাবের নিচে: জাকাত প্রযোজ্য নয়",
     };
   }
 
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-6 text-white">
-        <h1 className="flex items-center gap-2 text-2xl font-bold">
-          <Calculator /> Zakat Calculator
-          <span className="text-lg font-medium text-brand-100">
-            · জাকাত ক্যালকুলেটর
-          </span>
-        </h1>
-        <p className="mt-1 text-sm text-brand-100">
-          <Bi
-            en="Calculate your zakat easily"
-            bn="সহজে আপনার জাকাতের হিসাব করুন"
-          />
-        </p>
+
+    <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
+        <img
+          src="https://imglink.cc/cdn/nVK8A1h5vi.png"
+          alt="Zakat Calculator Logo"
+          className="h-17 w-17 rounded-full border-2 object-cover"
+        />
+        <div className="">
+          <p className="font-bold text-2xl">Zakat Calculator</p>
+          <p className="mt-1 text-sm text-brand-100 flex items-center gap-2">
+              Calculate your zakat easily
+          </p>
+        </div>
       </div>
+
+
+     
 
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
         {/* ইনপুট */}
         <div className="space-y-5">
-          <Section en="Settings" bn="সেটিংস">
+          <Section en="Settings">
             <div className="space-y-4">
               <div>
                 <p className="mb-2 text-sm font-medium">
                   Gold &amp; silver unit{" "}
-                  <span className="text-muted">/ সোনা-রূপার একক</span>
                 </p>
                 <Segment
                   value={unit}
                   onChange={changeUnit}
                   options={[
-                    { value: "gram", label: "Gram / গ্রাম" },
-                    { value: "bhori", label: "Bhori / ভরি" },
+                    { value: "gram", label: "Gram" },
+                    { value: "bhori", label: "Bhori" },
                   ]}
                 />
                 <p className="mt-1.5 text-[11px] text-muted">
-                  1 bhori (tola) = 11.664 g / ১ ভরি = ১১.৬৬৪ গ্রাম
+                  1 bhori (tola) = 11.664 g
                 </p>
               </div>
 
               <div>
                 <p className="mb-2 text-sm font-medium">
-                  Nisab based on <span className="text-muted">/ নিসাবের ভিত্তি</span>
+                  Nisab based on 
                 </p>
                 <Segment
                   value={basis}
                   onChange={setBasis}
                   options={[
-                    { value: "silver", label: "Silver / রূপা (52.5 bhori)" },
-                    { value: "gold", label: "Gold / সোনা (7.5 bhori)" },
+                    { value: "silver", label: "Silver (52.5 bhori)" },
+                    { value: "gold", label: "Gold  (7.5 bhori)" },
                   ]}
                 />
                 <p className="mt-1.5 text-[11px] text-muted">
                   Silver nisab is lower, gold nisab is higher. Scholars differ,
-                  so follow the guidance you trust. / রূপার নিসাব কম, সোনার নিসাব
-                  বেশি। আলেমদের মতভেদ আছে, তাই যে নির্দেশনায় আপনি আস্থা রাখেন তা
-                  অনুসরণ করুন।
+                  so follow the guidance you trust. 
                 </p>
               </div>
             </div>
@@ -231,14 +226,11 @@ export default function ZakatCalculator() {
           <Section en="Gold & Silver" bn="সোনা ও রূপা">
             <p className="mb-4 text-xs text-muted">
               We don&apos;t fetch live prices. Enter today&apos;s market price
-              (for gold, the price of your gold&apos;s purity, e.g. 22K). /
-              আমরা লাইভ দাম আনি না। আজকের বাজারদর দিন (সোনার ক্ষেত্রে আপনার সোনার মান
-              অনুযায়ী, যেমন ২২ ক্যারেট)।
+              (for gold, the price of your gold&apos;s purity, e.g. 22K).
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
               <Field
                 en="Gold weight"
-                bn="সোনার ওজন"
                 prefix=""
                 suffix={u}
                 value={v.goldW}
@@ -246,7 +238,6 @@ export default function ZakatCalculator() {
               />
               <Field
                 en={`Gold price per ${unit}`}
-                bn={`সোনার দাম প্রতি ${unit === "bhori" ? "ভরি" : "গ্রাম"}`}
                 suffix={`/ ${u}`}
                 value={v.goldP}
                 onChange={set("goldP")}
@@ -254,7 +245,6 @@ export default function ZakatCalculator() {
               />
               <Field
                 en="Silver weight"
-                bn="রূপার ওজন"
                 prefix=""
                 suffix={u}
                 value={v.silverW}
@@ -262,7 +252,6 @@ export default function ZakatCalculator() {
               />
               <Field
                 en={`Silver price per ${unit}`}
-                bn={`রূপার দাম প্রতি ${unit === "bhori" ? "ভরি" : "গ্রাম"}`}
                 suffix={`/ ${u}`}
                 value={v.silverP}
                 onChange={set("silverP")}
@@ -271,59 +260,52 @@ export default function ZakatCalculator() {
             </div>
             <p className="mt-3 text-[11px] text-muted">
               Unit: {uLabel}. Rulings on jewellery differ between schools of
-              thought. / একক: {uLabel}। অলংকারের জাকাত নিয়ে মাযহাবভেদে মত আলাদা।
+              thought.
             </p>
           </Section>
 
-          <Section en="Other assets" bn="অন্যান্য সম্পদ">
+          <Section en="Other assets">
             <div className="grid gap-4 sm:grid-cols-2">
               <Field
                 en="Cash in hand & bank"
-                bn="হাতে ও ব্যাংকে নগদ"
                 value={v.cash}
                 onChange={set("cash")}
               />
               <Field
                 en="Business stock & trade goods"
-                bn="ব্যবসার পণ্য ও মজুত"
                 value={v.business}
                 onChange={set("business")}
               />
               <Field
                 en="Investments & shares"
-                bn="বিনিয়োগ ও শেয়ার"
-                hint="Current market value / বর্তমান বাজারমূল্য"
+                hint="Current market value"
                 value={v.invest}
                 onChange={set("invest")}
               />
               <Field
                 en="Money owed to you"
-                bn="আপনার পাওনা"
-                hint="Only what you expect to be repaid / শুধু আদায়যোগ্য অংশ"
+                hint="Only what you expect to be repaid"
                 value={v.receivable}
                 onChange={set("receivable")}
               />
               <Field
                 en="Other zakatable assets"
-                bn="অন্যান্য জাকাতযোগ্য সম্পদ"
                 value={v.otherAsset}
                 onChange={set("otherAsset")}
               />
             </div>
           </Section>
 
-          <Section en="Liabilities" bn="দায়">
+          <Section en="Liabilities">
             <div className="grid gap-4 sm:grid-cols-2">
               <Field
                 en="Debts due"
-                bn="পরিশোধযোগ্য ঋণ"
-                hint="Loans and bills that are due now / যেসব ঋণ ও বিল এখন পরিশোধযোগ্য"
+                hint="Loans and bills that are due now"
                 value={v.debts}
                 onChange={set("debts")}
               />
               <Field
                 en="Other liabilities"
-                bn="অন্যান্য দায়"
                 value={v.otherLiab}
                 onChange={set("otherLiab")}
               />
@@ -333,12 +315,12 @@ export default function ZakatCalculator() {
 
         {/* ফল */}
         <aside className="rounded-2xl bg-gradient-to-br from-brand-900 via-brand-700 to-brand-600 p-5 text-white lg:sticky lg:top-20">
-          <p className="text-sm text-brand-100">Zakat due / প্রদেয় জাকাত</p>
+          <p className="text-sm text-brand-100">Zakat due</p>
           <p className="mt-1 text-4xl font-bold tabular-nums text-gold-400">
             {fmt(r.zakat)}
           </p>
           <p className="mt-1 text-xs text-brand-100">
-            {(RATE * 100).toFixed(1)}% of net wealth / নিট সম্পদের ২.৫%
+            {(RATE * 100).toFixed(1)}% of net wealth 2.5%
           </p>
 
           <p className={`mt-4 rounded-xl px-3 py-2 text-sm font-medium ${status.tone}`}>
@@ -347,16 +329,16 @@ export default function ZakatCalculator() {
 
           <div className="mt-4 divide-y divide-white/15 border-t border-white/15">
             <Row
-              label={<Bi en="Total assets" bn="মোট সম্পদ" />}
+              label={<Bi en="Total assets"  />}
               value={fmt(r.assets)}
             />
             <Row
-              label={<Bi en="Liabilities" bn="মোট দায়" />}
+              label={<Bi en="Liabilities"  />}
               value={`− ${fmt(r.liabilities)}`}
             />
             <Row
               strong
-              label={<Bi en="Net wealth" bn="নিট সম্পদ" />}
+              label={<Bi en="Net wealth"  />}
               value={fmt(r.net)}
             />
             <Row
@@ -364,7 +346,6 @@ export default function ZakatCalculator() {
                 <>
                   <Bi
                     en={`Nisab (${basisEn})`}
-                    bn={`নিসাব (${basisBn})`}
                   />
                   <span className="block text-[11px] text-brand-200">
                     {r.nisabGrams} g = {nisabBhori} bhori
@@ -379,24 +360,22 @@ export default function ZakatCalculator() {
             onClick={() => setV(EMPTY)}
             className="mt-4 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-sm font-medium hover:bg-white/25"
           >
-            <RotateCcw size={14} /> Reset / রিসেট
+            <RotateCcw size={14} /> Reset
           </button>
 
           <p className="mt-4 text-[11px] leading-relaxed text-brand-200">
             <Bi
               en="Zakat is due on wealth held for one full lunar year (hawl) that reaches the nisab."
-              bn="নিসাব পরিমাণ সম্পদ এক পূর্ণ চান্দ্র বছর (হাওল) ধরে থাকলে তার ওপর জাকাত।"
             />
           </p>
         </aside>
       </div>
 
       <div className="rounded-2xl border border-border bg-card p-4 text-sm text-foreground/80">
-        <p className="mb-1 font-semibold">Please note / জেনে রাখুন</p>
+        <p className="mb-1 font-semibold">Please note</p>
         <p>
           <Bi
             en="This calculator gives an estimate to help you. Rulings can differ (for example the nisab basis, jewellery, shares and receivables), so please consult a qualified scholar for your situation."
-            bn="এই ক্যালকুলেটর আপনাকে সাহায্য করার জন্য একটা আনুমানিক হিসাব দেয়। কিছু বিষয়ে (যেমন নিসাবের ভিত্তি, অলংকার, শেয়ার ও পাওনা) মতভেদ আছে, তাই আপনার অবস্থার জন্য একজন যোগ্য আলেমের পরামর্শ নিন।"
           />
         </p>
       </div>
