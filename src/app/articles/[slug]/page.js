@@ -35,7 +35,7 @@ export default async function ArticlePage({ params }) {
       {/* Article Header */}
       <div className="relative overflow-hidden rounded-2xl">
         {/* Header Image */}
-        <img
+        <img loading="lazy"
           src={article.icon}
           alt={article.title[0]}
           className="h-64 w-full object-cover md:h-80"

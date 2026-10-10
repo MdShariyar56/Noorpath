@@ -183,7 +183,7 @@ export default function RamadanDashboard() {
   return (
     <div className="space-y-6">
        <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
-               <img
+               <img loading="lazy"
                    src="https://imglink.cc/cdn/wZV86kKY6c.webp"
                    alt="Prayer Times Logo"
                    className="h-17 w-17 rounded-full border-2 object-cover"

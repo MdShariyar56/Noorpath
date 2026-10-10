@@ -59,7 +59,7 @@ export default function PrayerTimesView() {
   {/* Next Prayer */}
   <div className="group relative min-h-[380px] overflow-hidden rounded-3xl border border-white/10 shadow-xl">
     {/* Islamic Background */}
-    <img
+    <img loading="lazy"
       src="https://imglink.cc/cdn/3iTP1-e5Mi.jpg"
       alt="Beautiful mosque"
       className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"

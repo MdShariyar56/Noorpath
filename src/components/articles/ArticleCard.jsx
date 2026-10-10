@@ -11,7 +11,7 @@ export default function ArticleCard({ a, categories }) {
     >
       {/* Article Image */}
       <div className="relative h-36 overflow-hidden">
-        <img
+        <img loading="lazy"
           src={a.icon}
           alt={a.title[0]}
           className="h-full w-full object-cover transition duration-300 group-hover:scale-105"

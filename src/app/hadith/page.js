@@ -10,7 +10,7 @@ export default function HadithPage() {
   return (
     <div className="space-y-5">
       <div className=" rounded-2xl flex items-center gap-4 text-2xl  bg-gradient-to-br from-brand-900 via-brand-700 to-brand-500 p-4 text-white">
-        <img
+        <img loading="lazy"
             src="https://imglink.cc/cdn/Wf7gyL5BZl.png"
             alt="Hadith Logo"
             className="h-16 w-16 rounded-full border-2 object-cover"

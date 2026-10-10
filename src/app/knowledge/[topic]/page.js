@@ -106,7 +106,7 @@ export default async function TopicPage({ params }) {
             >
               {/* Topic Image */}
               <div className="h-14 w-14 shrink-0 overflow-hidden rounded-lg">
-                <img
+                <img loading="lazy"
                   src={t.icon}
                   alt={t.title[0]}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"

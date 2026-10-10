@@ -372,7 +372,7 @@ export default function RightSidebar({ featured }) {
         {/* Image */}
         <div className="relative h-36 overflow-hidden">
 
-          <img
+          <img loading="lazy"
             src={featured.icon}
             alt={featured.title[0]}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
