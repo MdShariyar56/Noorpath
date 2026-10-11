@@ -1,6 +1,12 @@
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  async rewrites() {
+    const target = process.env.BACKEND_URL;
+    // নিজের পিসিতে BACKEND_URL না থাকলে কিছু ঘোরানো হয় না
+    if (!target) return [];
+    return [{ source: "/api/:path*", destination: `${target}/api/:path*` }];
+  },
    images: {
     remotePatterns: [
       {
