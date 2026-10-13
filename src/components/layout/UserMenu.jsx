@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Bookmark, LogOut } from "lucide-react";
+import { Bookmark, LogOut, ShieldCheck } from "lucide-react";
 import { useAuth } from "@/components/auth/AuthProvider";
 
 export default function UserMenu() {
@@ -45,6 +45,10 @@ export default function UserMenu() {
   }
 
   const initial = (user.name || "U").trim().charAt(0).toUpperCase();
+  const isAdmin = user.role === "admin";
+
+  const item =
+    "flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-brand-50 dark:hover:bg-brand-800";
 
   return (
     <div ref={ref} className="relative">
@@ -66,28 +70,42 @@ export default function UserMenu() {
           <div className="px-3 py-2">
             <p className="truncate text-sm font-semibold">{user.name}</p>
             <p className="truncate text-xs text-muted">{user.email}</p>
-            {user.role === "admin" && (
+            {isAdmin && (
               <span className="mt-1 inline-block rounded-full bg-gold-400/20 px-2 py-0.5 text-[10px] font-semibold text-gold-500">
                 Admin
               </span>
             )}
           </div>
+
           <div className="my-1 h-px bg-border" />
-                    <Link
+
+          <Link
             href="/bookmarks"
             role="menuitem"
             onClick={() => setOpen(false)}
-            className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-brand-50 dark:hover:bg-brand-800"
+            className={item}
           >
             <Bookmark size={16} /> My Bookmarks / আমার বুকমার্ক
           </Link>
+
+          {isAdmin && (
+            <Link
+              href="/admin"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+              className={item}
+            >
+              <ShieldCheck size={16} /> Dashboard / ড্যাশবোর্ড
+            </Link>
+          )}
+
           <button
             role="menuitem"
             onClick={async () => {
               setOpen(false);
               await logout();
             }}
-            className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-brand-50 dark:hover:bg-brand-800"
+            className={item}
           >
             <LogOut size={16} /> Logout / লগআউট
           </button>
